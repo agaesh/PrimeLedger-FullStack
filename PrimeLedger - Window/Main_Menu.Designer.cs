@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             panel1 = new Panel();
+            BtnProductMetadata = new Button();
             BtnProduct = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -47,11 +48,24 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(BtnProductMetadata);
             panel1.Controls.Add(BtnProduct);
             panel1.Location = new Point(12, 97);
             panel1.Name = "panel1";
             panel1.Size = new Size(1307, 582);
             panel1.TabIndex = 1;
+            // 
+            // BtnProductMetadata
+            // 
+            BtnProductMetadata.BackColor = Color.Teal;
+            BtnProductMetadata.ForeColor = Color.White;
+            BtnProductMetadata.Location = new Point(26, 130);
+            BtnProductMetadata.Name = "BtnProductMetadata";
+            BtnProductMetadata.Size = new Size(130, 99);
+            BtnProductMetadata.TabIndex = 1;
+            BtnProductMetadata.Text = "Product Metadata";
+            BtnProductMetadata.UseVisualStyleBackColor = false;
+            BtnProductMetadata.Click += BtnProductMetadata_Click;
             // 
             // BtnProduct
             // 
@@ -87,5 +101,6 @@
         private Label label1;
         private Panel panel1;
         private Button BtnProduct;
+        private Button BtnProductMetadata;
     }
 }

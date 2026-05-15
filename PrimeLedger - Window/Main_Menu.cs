@@ -18,7 +18,13 @@ namespace PrimeLedger___Window
         private void BtnProduct_Click(object sender, EventArgs e)
         {
             var f = new Product();
-            f.ShowDialog(); 
+            f.ShowDialog();
+        }
+
+        private void BtnProductMetadata_Click(object sender, EventArgs e)
+        {
+            var f = new Product_Metadata();
+            f.ShowDialog();
         }
     }
 }
