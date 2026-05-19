@@ -31,6 +31,11 @@
                 entity.Property(e=> e.type)
                       .HasConversion<string>()
                       .HasMaxLength(50);
+
+                // Tell the database to enforce uniqueness on the Code column
+                modelBuilder.Entity<ProductMetadata>()
+                    .HasIndex(p => p.Code)
+                    .IsUnique();
             });
         }
     }
