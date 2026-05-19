@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 namespace PrimeAPI.Domain
@@ -19,6 +20,9 @@ namespace PrimeAPI.Domain
     public class ProductMetadata
     {
         public int Id { get; private set; }
+
+        [Required]
+        public string Code { get; private set; }
 
         [Required]
         public string Name { get; set; }
