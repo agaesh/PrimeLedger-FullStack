@@ -27,6 +27,10 @@
                      .WithMany(p => p.Children)          // navigation to children
                      .HasForeignKey(p => p.ParentId)     // FK column
                      .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete
+
+                entity.Property(e=> e.type)
+                      .HasConversion<string>()
+                      .HasMaxLength(50);
             });
         }
     }
