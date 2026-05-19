@@ -10,10 +10,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("Infrastructure")
+        builder.Configuration.GetConnectionString("DefaultConnection")
     ));
-
 
 var app = builder.Build();
 
