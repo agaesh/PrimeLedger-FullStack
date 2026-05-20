@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             panel2 = new Panel();
@@ -48,7 +48,7 @@
             label7 = new Label();
             textBox3 = new TextBox();
             label4 = new Label();
-            dataGridView2 = new DataGridView();
+            dgvSubGroup = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             colCloseSub = new DataGridViewImageColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
@@ -57,9 +57,10 @@
             dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             pnlGroup = new Panel();
+            BtnClose = new Button();
             label3 = new Label();
-            dataGridView1 = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
+            dgvGroup = new DataGridView();
+            colID = new DataGridViewTextBoxColumn();
             colClose = new DataGridViewImageColumn();
             Code = new DataGridViewTextBoxColumn();
             Description = new DataGridViewTextBoxColumn();
@@ -67,24 +68,23 @@
             colCreate = new DataGridViewTextBoxColumn();
             colCreateBy = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
-            radioButton2 = new RadioButton();
+            rbInactive = new RadioButton();
             rbActive = new RadioButton();
             label2 = new Label();
-            textBox1 = new TextBox();
+            txtGroupCode = new TextBox();
             label1 = new Label();
             label12 = new Label();
-            textBox6 = new TextBox();
+            txtDescription = new TextBox();
             button4 = new Button();
             button3 = new Button();
             tabPage2 = new TabPage();
-            BtnClose = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSubGroup).BeginInit();
             pnlGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvGroup).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -116,7 +116,7 @@
             panel2.BackColor = SystemColors.ScrollBar;
             panel2.Controls.Add(panel3);
             panel2.Controls.Add(label4);
-            panel2.Controls.Add(dataGridView2);
+            panel2.Controls.Add(dgvSubGroup);
             panel2.Dock = DockStyle.Bottom;
             panel2.Location = new Point(3, 339);
             panel2.Name = "panel2";
@@ -257,38 +257,39 @@
             label4.TabIndex = 29;
             label4.Text = "Sub Group Setup";
             // 
-            // dataGridView2
+            // dgvSubGroup
             // 
-            dataGridView2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView2.BackgroundColor = Color.White;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.White;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, colCloseSub, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView2.EnableHeadersVisualStyles = false;
-            dataGridView2.Location = new Point(0, 37);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersVisible = false;
-            dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.Size = new Size(1330, 244);
-            dataGridView2.TabIndex = 2;
+            dgvSubGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvSubGroup.BackgroundColor = Color.White;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.White;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvSubGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dgvSubGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvSubGroup.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, colCloseSub, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            dgvSubGroup.DefaultCellStyle = dataGridViewCellStyle9;
+            dgvSubGroup.EnableHeadersVisualStyles = false;
+            dgvSubGroup.Location = new Point(0, 37);
+            dgvSubGroup.Name = "dgvSubGroup";
+            dgvSubGroup.RowHeadersVisible = false;
+            dgvSubGroup.RowHeadersWidth = 62;
+            dgvSubGroup.Size = new Size(1330, 244);
+            dgvSubGroup.TabIndex = 2;
             // 
             // dataGridViewTextBoxColumn1
             // 
+            dataGridViewTextBoxColumn1.DataPropertyName = "id";
             dataGridViewTextBoxColumn1.HeaderText = "colID";
             dataGridViewTextBoxColumn1.MinimumWidth = 8;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -305,6 +306,7 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
+            dataGridViewTextBoxColumn2.DataPropertyName = "code";
             dataGridViewTextBoxColumn2.HeaderText = "Code";
             dataGridViewTextBoxColumn2.MinimumWidth = 8;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
@@ -314,12 +316,14 @@
             // dataGridViewTextBoxColumn3
             // 
             dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn3.DataPropertyName = "desciription";
             dataGridViewTextBoxColumn3.HeaderText = "Description";
             dataGridViewTextBoxColumn3.MinimumWidth = 8;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // dataGridViewTextBoxColumn4
             // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "status";
             dataGridViewTextBoxColumn4.HeaderText = "Status";
             dataGridViewTextBoxColumn4.MinimumWidth = 8;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
@@ -328,8 +332,9 @@
             // 
             // dataGridViewTextBoxColumn5
             // 
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewTextBoxColumn5.DataPropertyName = "create_date";
+            dataGridViewCellStyle8.Format = "dd/MM/yyyy";
+            dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle8;
             dataGridViewTextBoxColumn5.HeaderText = "Create Date";
             dataGridViewTextBoxColumn5.MinimumWidth = 8;
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
@@ -341,6 +346,7 @@
             dataGridViewTextBoxColumn6.HeaderText = "Create By";
             dataGridViewTextBoxColumn6.MinimumWidth = 8;
             dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.Visible = false;
             dataGridViewTextBoxColumn6.Width = 150;
             // 
             // pnlGroup
@@ -349,12 +355,29 @@
             pnlGroup.BackColor = SystemColors.ScrollBar;
             pnlGroup.Controls.Add(BtnClose);
             pnlGroup.Controls.Add(label3);
-            pnlGroup.Controls.Add(dataGridView1);
+            pnlGroup.Controls.Add(dgvGroup);
             pnlGroup.Controls.Add(panel1);
             pnlGroup.Location = new Point(3, 3);
             pnlGroup.Name = "pnlGroup";
             pnlGroup.Size = new Size(1331, 335);
             pnlGroup.TabIndex = 3;
+            // 
+            // BtnClose
+            // 
+            BtnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClose.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnClose.BackColor = SystemColors.Control;
+            BtnClose.FlatAppearance.BorderSize = 0;
+            BtnClose.FlatStyle = FlatStyle.Flat;
+            BtnClose.Font = new Font("Tahoma", 10.5F);
+            BtnClose.ForeColor = Color.Black;
+            BtnClose.Location = new Point(1255, 2);
+            BtnClose.Name = "BtnClose";
+            BtnClose.Size = new Size(74, 34);
+            BtnClose.TabIndex = 29;
+            BtnClose.Text = "Close";
+            BtnClose.UseVisualStyleBackColor = false;
+            BtnClose.Click += BtnClose_Click;
             // 
             // label3
             // 
@@ -366,43 +389,47 @@
             label3.TabIndex = 28;
             label3.Text = "Product Group Setup";
             // 
-            // dataGridView1
+            // dgvGroup
             // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.BackgroundColor = Color.White;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, colClose, Code, Description, colStatus, colCreate, colCreateBy });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
-            dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.Location = new Point(2, 39);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(1329, 258);
-            dataGridView1.TabIndex = 0;
+            dgvGroup.AllowUserToResizeRows = false;
+            dgvGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvGroup.BackgroundColor = Color.White;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dgvGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGroup.Columns.AddRange(new DataGridViewColumn[] { colID, colClose, Code, Description, colStatus, colCreate, colCreateBy });
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.White;
+            dataGridViewCellStyle12.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = Color.White;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
+            dgvGroup.DefaultCellStyle = dataGridViewCellStyle12;
+            dgvGroup.EnableHeadersVisualStyles = false;
+            dgvGroup.Location = new Point(2, 39);
+            dgvGroup.Name = "dgvGroup";
+            dgvGroup.RowHeadersVisible = false;
+            dgvGroup.RowHeadersWidth = 62;
+            dgvGroup.Size = new Size(1329, 258);
+            dgvGroup.TabIndex = 0;
+            dgvGroup.CellClick += dgvGroup_CellContentClick;
+            dgvGroup.CellDoubleClick += dgvGroup_CellDoubleClick;
             // 
-            // ID
+            // colID
             // 
-            ID.HeaderText = "colID";
-            ID.MinimumWidth = 8;
-            ID.Name = "ID";
-            ID.Visible = false;
-            ID.Width = 150;
+            colID.DataPropertyName = "id";
+            colID.HeaderText = "colID";
+            colID.MinimumWidth = 8;
+            colID.Name = "colID";
+            colID.Visible = false;
+            colID.Width = 150;
             // 
             // colClose
             // 
@@ -414,6 +441,7 @@
             // 
             // Code
             // 
+            Code.DataPropertyName = "code";
             Code.HeaderText = "Code";
             Code.MinimumWidth = 8;
             Code.Name = "Code";
@@ -423,12 +451,14 @@
             // Description
             // 
             Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Description.DataPropertyName = "description";
             Description.HeaderText = "Description";
             Description.MinimumWidth = 8;
             Description.Name = "Description";
             // 
             // colStatus
             // 
+            colStatus.DataPropertyName = "status";
             colStatus.HeaderText = "Status";
             colStatus.MinimumWidth = 8;
             colStatus.Name = "colStatus";
@@ -437,8 +467,9 @@
             // 
             // colCreate
             // 
-            dataGridViewCellStyle5.Format = "dd/MM/yyyy";
-            colCreate.DefaultCellStyle = dataGridViewCellStyle5;
+            colCreate.DataPropertyName = "create_at";
+            dataGridViewCellStyle11.Format = "dd/MM/yyyy";
+            colCreate.DefaultCellStyle = dataGridViewCellStyle11;
             colCreate.HeaderText = "Create Date";
             colCreate.MinimumWidth = 8;
             colCreate.Name = "colCreate";
@@ -450,18 +481,19 @@
             colCreateBy.HeaderText = "Create By";
             colCreateBy.MinimumWidth = 8;
             colCreateBy.Name = "colCreateBy";
+            colCreateBy.Visible = false;
             colCreateBy.Width = 150;
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.ScrollBar;
-            panel1.Controls.Add(radioButton2);
+            panel1.Controls.Add(rbInactive);
             panel1.Controls.Add(rbActive);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(txtGroupCode);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(label12);
-            panel1.Controls.Add(textBox6);
+            panel1.Controls.Add(txtDescription);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button3);
             panel1.Dock = DockStyle.Bottom;
@@ -470,18 +502,18 @@
             panel1.Size = new Size(1331, 37);
             panel1.TabIndex = 1;
             // 
-            // radioButton2
+            // rbInactive
             // 
-            radioButton2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            radioButton2.AutoSize = true;
-            radioButton2.Font = new Font("Tahoma", 10F);
-            radioButton2.Location = new Point(953, 3);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(106, 28);
-            radioButton2.TabIndex = 32;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Inactive";
-            radioButton2.UseVisualStyleBackColor = true;
+            rbInactive.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            rbInactive.AutoSize = true;
+            rbInactive.Font = new Font("Tahoma", 10F);
+            rbInactive.Location = new Point(953, 3);
+            rbInactive.Name = "rbInactive";
+            rbInactive.Size = new Size(106, 28);
+            rbInactive.TabIndex = 32;
+            rbInactive.TabStop = true;
+            rbInactive.Text = "Inactive";
+            rbInactive.UseVisualStyleBackColor = true;
             // 
             // rbActive
             // 
@@ -507,13 +539,13 @@
             label2.TabIndex = 29;
             label2.Text = "Status";
             // 
-            // textBox1
+            // txtGroupCode
             // 
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(69, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(178, 31);
-            textBox1.TabIndex = 28;
+            txtGroupCode.BorderStyle = BorderStyle.FixedSingle;
+            txtGroupCode.Location = new Point(69, 3);
+            txtGroupCode.Name = "txtGroupCode";
+            txtGroupCode.Size = new Size(178, 31);
+            txtGroupCode.TabIndex = 28;
             // 
             // label1
             // 
@@ -535,14 +567,14 @@
             label12.TabIndex = 26;
             label12.Text = "Description";
             // 
-            // textBox6
+            // txtDescription
             // 
-            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox6.BorderStyle = BorderStyle.FixedSingle;
-            textBox6.Location = new Point(362, 3);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(426, 31);
-            textBox6.TabIndex = 25;
+            txtDescription.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtDescription.BorderStyle = BorderStyle.FixedSingle;
+            txtDescription.Location = new Point(362, 3);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(426, 31);
+            txtDescription.TabIndex = 25;
             // 
             // button4
             // 
@@ -586,22 +618,6 @@
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;
             // 
-            // BtnClose
-            // 
-            BtnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnClose.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BtnClose.BackColor = SystemColors.Control;
-            BtnClose.FlatAppearance.BorderSize = 0;
-            BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Tahoma", 10.5F);
-            BtnClose.ForeColor = Color.Black;
-            BtnClose.Location = new Point(1255, 2);
-            BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(74, 34);
-            BtnClose.TabIndex = 29;
-            BtnClose.Text = "Close";
-            BtnClose.UseVisualStyleBackColor = false;
-            // 
             // Product_Metadata
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -612,16 +628,17 @@
             Name = "Product_Metadata";
             Text = "Product_Metadata";
             WindowState = FormWindowState.Maximized;
+            Load += Product_Metadata_Load;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvSubGroup).EndInit();
             pnlGroup.ResumeLayout(false);
             pnlGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvGroup).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -632,19 +649,19 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private DataGridView dataGridView1;
+        private DataGridView dgvGroup;
         private Panel panel1;
         private Button button4;
         private Button button3;
-        private RadioButton radioButton2;
+        private RadioButton rbInactive;
         private RadioButton rbActive;
         private Label label2;
-        private TextBox textBox1;
+        private TextBox txtGroupCode;
         private Label label1;
         private Label label12;
-        private TextBox textBox6;
+        private TextBox txtDescription;
         private Panel pnlGroup;
-        private DataGridView dataGridView2;
+        private DataGridView dgvSubGroup;
         private Panel panel2;
         private Label label4;
         private Label label3;
@@ -658,6 +675,7 @@
         private Label label6;
         private Label label7;
         private TextBox textBox3;
+        private Button BtnClose;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewImageColumn colCloseSub;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -665,13 +683,12 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn colID;
         private DataGridViewImageColumn colClose;
         private DataGridViewTextBoxColumn Code;
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colCreate;
         private DataGridViewTextBoxColumn colCreateBy;
-        private Button BtnClose;
     }
 }
