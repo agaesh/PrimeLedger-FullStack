@@ -7,6 +7,7 @@ namespace PrimeAPI.Domain
 
     public enum Codetype { 
         GROUP,
+        SUBGROUP,
         BRAND,
         UOM
     }
