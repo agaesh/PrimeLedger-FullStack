@@ -1,6 +1,7 @@
 ﻿
-using System.Configuration;
 using Newtonsoft.Json;
+using System.Configuration;
+using System.Text;
 
 namespace PrimeLedger___Window.Services
 {
@@ -25,5 +26,23 @@ namespace PrimeLedger___Window.Services
             var json = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
+        {
+            var jsonContent = new StringContent(
+                JsonConvert.SerializeObject(data),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await _client.PostAsync(_baseUrl + endpoint, jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException($"POST failed: {response.StatusCode}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TResponse>(json);
+        }
     }
+
 }
