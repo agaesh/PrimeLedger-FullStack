@@ -34,8 +34,8 @@ namespace PrimeLedger___Window
         {
             return codeType switch
             {
-                "GROUP" => "primeapi/group",
-                "SUBGROUP" when id.HasValue => $"primeapi/subgroup/{id}",
+                "GROUP" => "/group",
+                "SUBGROUP" when id.HasValue => $"/group/{id}/subgroups",
                 _ => throw new ArgumentException("Invalid codeType or missing id")
             };
         }
