@@ -84,7 +84,7 @@ namespace PrimeLedger___Window
             }
         }
 
-        private void dgvGroup_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvGroup_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -92,7 +92,8 @@ namespace PrimeLedger___Window
 
                 var parentId = Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value);
 
-                var data = LoadCodeType("SUBGROUP", parentId).Result;
+                var data = await LoadCodeType("SUBGROUP", parentId);
+                dgvSubGroup.AutoGenerateColumns = false;
                 dgvSubGroup.DataSource = data;
 
             }
