@@ -65,11 +65,11 @@ namespace PrimeLedger___Window
             }
         }
        
-        private void dgvGroup_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvGroup_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-
+                if(e.RowIndex < 0) return;
                 var record = _groupData.Find(g => g.Id == Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value));
 
                 txtGroupCode.Text = record.Code.ToString();
