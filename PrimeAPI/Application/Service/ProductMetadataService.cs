@@ -19,7 +19,12 @@ namespace PrimeAPI.Application.Service
                 .Where(x => x.type == type)
                 .ToListAsync();
         }
-
+        public async Task<List<ProductMetadata>> GetSubByParentCode(Codetype type, int parentId)
+        {
+            return await _context.ProductMetadata.
+                Where(x => x.ParentId == parentId && x.type == type)
+                .ToListAsync();
+        }
         public async Task<ProductMetadata?> GetById(int id, Codetype type)
         {
             return await _context.ProductMetadata

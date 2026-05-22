@@ -1,6 +1,6 @@
 ﻿namespace PrimeLedger_Window.DTO
 {
-    internal class ProductMetadataDTO
+    public class ProductMetadataDTO
     {
         public int Id { get; set; }
         public string Code { get; set; }
@@ -8,8 +8,10 @@
         public string Status { get; set; }
         public string Type { get; set; }
 
-        public string create_at { get; set; }
+        public int? ParentId { get; set; }
 
-        public string update_at { get; set; }
+        public DateTime createdAt { get; set; }
+
+        public DateTime? updatedAt { get; set; }
     }
 }

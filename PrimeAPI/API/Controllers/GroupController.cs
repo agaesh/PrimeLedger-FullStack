@@ -36,6 +36,13 @@ namespace PrimeAPI.Controllers
             return Ok(group);
         }
 
+        [HttpGet("{groupId}/subgroups")]
+        public async Task<IActionResult> GetSubGroupsByGroup([FromRoute] int groupId)
+        {
+            var result = await _service.GetSubByParentCode(Codetype.SUBGROUP, groupId);
+            return Ok(result);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductGroup(int id, [FromBody] ProductMetadata productgroup)
         {

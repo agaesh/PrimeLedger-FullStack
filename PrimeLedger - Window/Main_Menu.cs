@@ -23,8 +23,17 @@ namespace PrimeLedger___Window
 
         private void BtnProductMetadata_Click(object sender, EventArgs e)
         {
-            var f = new Product_Metadata();
-            f.ShowDialog();
+            try
+            {
+                var f = new Product_Metadata();
+                f.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"An error occurred while opening Product Metadata: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+   
         }
     }
 }
