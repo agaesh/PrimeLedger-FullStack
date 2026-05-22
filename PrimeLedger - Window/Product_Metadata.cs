@@ -107,5 +107,25 @@ namespace PrimeLedger___Window
         {
             this.Close();
         }
+
+        private void dgvSubGroup_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0) return;
+
+                var row = dgvSubGroup.Rows[e.RowIndex];
+
+                txtSubGroupCode.Text = row.Cells[colSubGroupCode.Name]?.Value?.ToString();
+                txtSubGroupDesc.Text = row.Cells[colSubGroupDescription.Name]?.Value?.ToString();
+
+                rbActiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "active";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
