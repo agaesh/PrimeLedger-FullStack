@@ -10,8 +10,8 @@
 
         public int? ParentId { get; set; }
 
-        public string createAt { get; set; }
+        public string createdAt { get; set; }
 
-        public string? updateAt { get; set; }
+        public string? updatedAt { get; set; }
     }
 }
