@@ -120,6 +120,7 @@ namespace PrimeLedger___Window
                 txtSubGroupDesc.Text = row.Cells[colSubGroupDescription.Name]?.Value?.ToString();
 
                 rbActiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "active";
+                rbInactiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "inactive";
 
             }
             catch (Exception ex)
