@@ -1,19 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PrimeAPI.Domain;
-using PrimeAPI.Infrastructure; // Fixed typo 'f' to 't'
-using PrimeAPI.Application.Service;
-
+using PrimeAPI.Application.Helpers;
+using PrimeAPI.Application.Interface;
+using PrimeLedger.Shared.DTO.Products;
+using PrimeLedger.Shared.Enums;
 namespace PrimeAPI.Controllers
 {
     [Route("PrimeAPI/[controller]")]
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly ProductMetadataService _service;
+        private readonly IProductMetadataService _service;
 
         // Clean Architecture Tip: Only inject the service layer here. Remove AppDbContext!
-        public GroupController(ProductMetadataService service)
+        public GroupController(IProductMetadataService service)
         {
             _service = service;
         }
@@ -44,18 +44,20 @@ namespace PrimeAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProductGroup(int id, [FromBody] ProductMetadata productgroup)
+ 
+        public async Task<IActionResult> PutProductGroup(int id, UpdateProductMetadataDTO productgroup)
         {
-            if (id != productgroup.Id)
-            {
-                return BadRequest(new { message = "ID mismatch between route and payload." });
-            }
+        //    if (id != productgroup.Id)
+        //    {
+        //        return BadRequest(ApiResponse<string>.FailureResponse("ID mismatch between route and payload."));
+        //    }
 
             try
             {
-                // Let the service layer handle data validation and db entity state updates
-                await _service.Update(productgroup, Codetype.GROUP);
-                return NoContent();
+                var result = await _service.UpdateAsync(id,productgroup);
+
+                // If your service returns ApiResponse<T>, just forward it
+                return Ok(result);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -63,43 +65,40 @@ namespace PrimeAPI.Controllers
                 var exists = await _service.GetById(id, Codetype.GROUP) != null;
                 if (!exists)
                 {
-                    return NotFound(new { message = $"Product group with ID {id} no longer exists." });
+                    return NotFound(ApiResponse<string>.FailureResponse(
+                        $"Product group with ID {id} no longer exists."
+                    ));
                 }
-                throw;
+                throw; // bubble up if it's a real concurrency conflict
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An error occurred while updating the product group.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<string>.FailureResponse(
+                        $"An error occurred while updating the product group: {ex.Message}"
+                    )
+                );
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostProductGroup([FromBody] ProductMetadata productgroup)
+        public async Task<IActionResult> PostProductGroup([FromBody] CreateProductMetadataDTO productgroup)
         {
             try
             {
-                await _service.Create(productgroup, Codetype.GROUP);
+                await _service.CreateAsync(productgroup, Codetype.GROUP);
 
-                return StatusCode(StatusCodes.Status201Created, new
-                {
-                    success = true,
-                    message = $"Group '{productgroup.Name}' has been created successfully.",
-                    data = productgroup
-                });
+                return StatusCode(StatusCodes.Status201Created,
+                ApiResponse<CreateProductMetadataDTO>.SuccessResponse(productgroup, $"Group '{productgroup.Code}' has been created successfully."));
+               
+               
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while creating the product group.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<string>.FailureResponse(
+                        $"An unexpected error occurred while creating the product group: {ex.Message}"
+                )); 
             }
         }
 
@@ -108,17 +107,15 @@ namespace PrimeAPI.Controllers
         {
             try
             {
-                await _service.Delete(id, Codetype.GROUP);
+                await _service.DeleteAsync(id);
                 return NoContent(); // 204 NoContent is standard for successful deletions
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while deleting the product group.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<string>.FailureResponse(
+                        $"An unexpected error occurred while deleting the product group: {ex.Message}"
+                ));
             }
         }
     }

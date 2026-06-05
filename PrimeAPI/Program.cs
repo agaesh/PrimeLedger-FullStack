@@ -1,6 +1,8 @@
-using PrimeAPI.Infrasfructure;
 using Microsoft.EntityFrameworkCore;
+using PrimeAPI.Application.Interface;
 using PrimeAPI.Application.Service;
+using PrimeAPI.Infrasfructure;
+using PrimeAPI.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,7 +24,8 @@ builder.Services.AddControllers()
         );
     });
 
-builder.Services.AddScoped<ProductMetadataService>();
+builder.Services.AddScoped<IProductMetadataService,ProductMetadataService>();
+builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository>();
 
 var app = builder.Build();
 

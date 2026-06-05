@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PrimeAPI.Application.Helpers;
 using PrimeAPI.Application.Service;
-using PrimeAPI.Domain;
+using PrimeLedger.Shared.DTO.Products; // Fixed typo 'f' to 't
+using PrimeLedger.Shared.Enums;
 
 namespace PrimeAPI.API.Controllers
 {
@@ -38,17 +40,12 @@ namespace PrimeAPI.API.Controllers
         
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrand(int id, [FromBody] ProductMetadata brand)
+        public async Task<IActionResult> PutBrand(int id, [FromBody] UpdateProductMetadataDTO brandDTO)
         {
-            if (id != brand.Id)
-            {
-                return BadRequest(new { message = "ID mismatch between route and payload." });
-            }
-
             try
             {
                 // Service layer handles validation + EF state tracking
-                await _service.Update(brand, Codetype.BRAND);
+                await _service.UpdateAsync(id,brandDTO);
                 return NoContent();
             }
             catch (DbUpdateConcurrencyException)
@@ -63,38 +60,36 @@ namespace PrimeAPI.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An error occurred while updating the brand.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   ApiResponse<string>.FailureResponse(
+                       $"An error occurred while updating the product group: {ex.Message}"
+                   )
+                );
             }
         }
 
         // POST: PrimeAPI/Brand
         [HttpPost]
-        public async Task<IActionResult> PostBrand([FromBody] ProductMetadata brand)
+        public async Task<IActionResult> PostBrand([FromBody] CreateProductMetadataDTO brand)
         {
             try
             {
-                await _service.Create(brand, Codetype.BRAND);
-
-                return StatusCode(StatusCodes.Status201Created, new
-                {
-                    success = true,
-                    message = $"Brand '{brand.Name}' has been created successfully.",
-                    data = brand
-                });
+                var CreateBrand = await _service.CreateAsync(brand, Codetype.BRAND);
+                return StatusCode(
+                    StatusCodes.Status201Created,
+                    ApiResponse<CreateProductMetadataDTO>.SuccessResponse(
+                        CreateBrand,
+                        $"Brand '{brand.Code}' has been created successfully."
+                    )
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while creating the brand.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                 ApiResponse<string>.FailureResponse(
+                     $"An error occurred while creating the product group: {ex.Message}"
+                 )
+              );
             }
         }
 
@@ -104,18 +99,16 @@ namespace PrimeAPI.API.Controllers
         {
             try
             {
-                await _service.Delete(id, Codetype.BRAND);
+                await _service.DeleteAsync(id);
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while deleting the brand.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                ApiResponse<string>.FailureResponse(
+                    $"An error occurred while deleting the product group: {ex.Message}"
+                ));
             }
         }
     }
