@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PrimeAPI.Application.Helpers;
 using PrimeAPI.Application.Service;
-using PrimeAPI.Domain;
+using PrimeLedger.Shared.DTO.Products;
+using PrimeLedger.Shared.Enums;
 
 namespace PrimeAPI.API.Controllers
 {
@@ -44,19 +46,12 @@ namespace PrimeAPI.API.Controllers
 
         // PUT: PrimeAPI/SubGroup/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSubGroup(int id, [FromBody] ProductMetadata subGroup)
+        public async Task<IActionResult> PutSubGroup(int id, [FromBody] UpdateProductMetadataDTO subGroup)
         {
-            if (id != subGroup.Id)
-            {
-                return BadRequest(new
-                {
-                    message = "ID mismatch between route and payload."
-                });
-            }
 
             try
             {
-                await _service.Update(subGroup, Codetype.SUBGROUP);
+                await _service.UpdateAsync(id,subGroup);
 
                 return NoContent();
             }
@@ -76,38 +71,26 @@ namespace PrimeAPI.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An error occurred while updating the subgroup.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                ApiResponse<string>.FailureResponse("An error occured while updateing the subgroup:" + ex.Message));
             }
         }
 
         // POST: PrimeAPI/SubGroup
         [HttpPost]
-        public async Task<IActionResult> PostSubGroup([FromBody] ProductMetadata subGroup)
+        public async Task<IActionResult> PostSubGroup([FromBody] CreateProductMetadataDTO subGroup)
         {
             try
             {
-                await _service.Create(subGroup, Codetype.SUBGROUP);
+                var createdSub = await _service.CreateAsync(subGroup, Codetype.SUBGROUP);
 
-                return StatusCode(StatusCodes.Status201Created, new
-                {
-                    success = true,
-                    message = $"SubGroup '{subGroup.Name}' has been created successfully.",
-                    data = subGroup
-                });
+                return StatusCode(StatusCodes.Status201Created,
+                ApiResponse<CreateProductMetadataDTO>.SuccessResponse(createdSub,$"Subgroup '{subGroup.Code}' has been created successfully"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while creating the subgroup.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                ApiResponse<string>.FailureResponse("An unexpected error occured while creating the subgroup:" + ex.Message));
             }
         }
 
@@ -117,18 +100,14 @@ namespace PrimeAPI.API.Controllers
         {
             try
             {
-                await _service.Delete(id, Codetype.SUBGROUP);
+                await _service.DeleteAsync(id);
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    success = false,
-                    message = "An unexpected error occurred while deleting the subgroup.",
-                    detail = ex.Message
-                });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                ApiResponse<string>.FailureResponse("An error occured while deleting the subgroup:" + ex.Message));
             }
         }
     }

@@ -1,29 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Numerics;
+using PrimeLedger.Shared.Enums;
 namespace PrimeAPI.Domain
 {
 
-    public enum Codetype { 
-        GROUP,
-        SUBGROUP,
-        BRAND,
-        UOM
-    }
-
-    public enum StatusEnum
-    {
-        ACTIVE,
-        INACTIVE
-    }
 
     public class ProductMetadata
     {
         public int Id { get; private set; }
 
         [Required]
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -48,9 +36,9 @@ namespace PrimeAPI.Domain
 
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime? updatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
