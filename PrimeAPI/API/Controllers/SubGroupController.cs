@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrimeAPI.Application.Helpers;
-using PrimeAPI.Application.Service;
+using PrimeAPI.Application.Interface;
 using PrimeLedger.Shared.DTO.Products;
 using PrimeLedger.Shared.Enums;
 
@@ -11,10 +11,10 @@ namespace PrimeAPI.API.Controllers
     [ApiController]
     public class SubGroupController : ControllerBase
     {
-        private readonly ProductMetadataService _service;
+        private readonly IProductMetadataService _service;
 
         // Inject only the service layer
-        public SubGroupController(ProductMetadataService service)
+        public SubGroupController(IProductMetadataService service)
         {
             _service = service;
         }
