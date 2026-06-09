@@ -54,10 +54,12 @@ namespace PrimeAPI.Controllers
 
             try
             {
-                var result = await _service.UpdateAsync(id,productgroup);
+                var result = await _service.UpdateAsync(id, productgroup);
 
-                // If your service returns ApiResponse<T>, just forward it
-                return Ok(result);
+                return Ok(ApiResponse<UpdateProductMetadataDTO>.SuccessResponse(
+                    result,
+                    "Updated successfully"
+                ));
             }
             catch (DbUpdateConcurrencyException)
             {

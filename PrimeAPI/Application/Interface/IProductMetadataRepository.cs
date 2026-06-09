@@ -13,6 +13,7 @@ namespace PrimeAPI.Application.Interface
         Task UpdateAsync(ProductMetadata entity);
 
         Task<bool> DeleteAsync(int id);
+
+        Task<bool> ExistChildren(int id);
     }
- 
 }
