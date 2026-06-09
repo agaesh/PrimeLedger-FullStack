@@ -71,5 +71,12 @@ namespace PrimeAPI.Repositories
         {
             return await _context.ProductMetadata.AnyAsync(x => x.Id == id);
         }
+
+        public async Task<bool> ExistChildren(int id)
+        {
+            return await _context.ProductMetadata
+                .Where(x => x.Id == id)
+                .AnyAsync(x => x.Children.Any());
+        }
     }
 }
