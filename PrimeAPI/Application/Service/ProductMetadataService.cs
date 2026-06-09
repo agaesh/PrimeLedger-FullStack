@@ -75,6 +75,12 @@ namespace PrimeAPI.Application.Service
         public async Task DeleteAsync(int id)
         {
             if(id <= 0) throw new ArgumentException("Id must be greater than zero.", nameof(id));
+
+            if (await _repository.ExistChildren(id))
+            {
+                throw new InvalidOperationException($"Cannot Delete Entity with ID: {id} as the child exists");
+            }
+
             await _repository.DeleteAsync(id);
         }
     }
