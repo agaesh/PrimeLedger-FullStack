@@ -38,6 +38,7 @@ namespace PrimeAPI.Application.Service
                 Code = entity.Code,
                 Description = entity.Description,
                 type = type,
+                Status = entity.Status,
                 ParentId = entity.ParentId,
                 CreatedAt = DateTime.UtcNow
             };

@@ -72,7 +72,7 @@ namespace PrimeAPI.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                ApiResponse<string>.FailureResponse("An error occured while updateing the subgroup:" + ex.Message));
+                ApiResponse<string>.FailureResponse("An error occured while updateing the subgroup"));
             }
         }
 
@@ -90,7 +90,7 @@ namespace PrimeAPI.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                ApiResponse<string>.FailureResponse("An unexpected error occured while creating the subgroup:" + ex.Message));
+                ApiResponse<string>.FailureResponse("An unexpected error occured while creating the subgroup"));
             }
         }
 
@@ -107,7 +107,7 @@ namespace PrimeAPI.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                ApiResponse<string>.FailureResponse("An error occured while deleting the subgroup:" + ex.Message));
+               ApiResponse<string>.FailureResponse(ex.Message));
             }
         }
     }
