@@ -1,7 +1,4 @@
-﻿
-using LoadingIndicator;
-using LoadingIndicator.WinForms;
-using Newtonsoft.Json;
+﻿using LoadingIndicator.WinForms;
 using PrimeLedger.Helpers;
 using PrimeLedger.Shared.DTO;
 using PrimeLedger.Shared.DTO.Products;
@@ -33,7 +30,7 @@ namespace PrimeLedger___Window
                 using (_loading.Start())
                 {
                     await Task.Delay(3000);
-                _groupData = await LoadCodeType("GROUP");
+                    _groupData = await LoadCodeType("GROUP");
                 }
 
                 dgvGroup.AutoGenerateColumns = false;
@@ -91,7 +88,7 @@ namespace PrimeLedger___Window
                 return new List<ProductMetadataDTO>();
             }
         }
-       
+
         private void dgvGroup_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -188,13 +185,200 @@ namespace PrimeLedger___Window
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        public async Task<bool> CreateAsync(CreateProductMetadataDTO dto, string type)
+        {
+            try
+            {
+                var result = await _client.PostAsync<CreateProductMetadataDTO, ApiResponse<ProductMetadataDTO>>(
+                    BuildEndpoint(type, null),
+                    dto
+                );
+
+                return result.Success;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        private async Task UpdateAsync(int id, UpdateProductMetadataDTO dto, string type)
+        {
+            try
+            {
+                await _client.PutAsync(BuildEndpoint(type, id), dto);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                throw;
             }
         }
+        private async void BtnCreateGroup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (BtnCreateGroup.Text == "Update" && dgvGroup.CurrentRow != null)
+                {
+                    var id = Convert.ToInt32(dgvGroup.CurrentRow.Cells[colID.Name].Value);
+                    var updateDto = new UpdateProductMetadataDTO
+                    {
+                        Description = txtDescription.Text,
+                        Status = rbActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+
+                    await UpdateAsync(id, updateDto, "GROUP_TRANSACTION");
+
+                    //Updating the local datagridview after update
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                      dgvGroup,
+                      id,
+                      new Dictionary<string, object>
+                        {
+                            { "Description", updateDto.Description },
+                            { "Status", updateDto.Status},
+                            { "UpdatedAt", updateDto.UpdatedAt }
+                        }
+                    );
+
+                    MessageBox.Show("Group updated successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    var createDto = new CreateProductMetadataDTO
+                    {
+
+                        Code = txtGroupCode.Text,
+                        Description = txtDescription.Text,
+                        Type = Codetype.GROUP,
+                        Status = rbActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        ParentId = 0,
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    var isSuccess = await CreateAsync(createDto, "GROUP_TRANSACTION");
+
+                    var id = Convert.ToInt32(dgvGroup.CurrentRow.Cells[colID.Name].Value);
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                        dgvGroup,
+                        id,
+                        new Dictionary<string, object>
+                        {
+                            { "Id",createDto.Id }, // Temporary ID, will be updated after API response
+                            { "Code", createDto.Code },
+                            { "Description", createDto.Description },
+                            { "Type", createDto.Type },
+                            { "Status", createDto.Status },
+                            { "ParentId", createDto.ParentId },
+                            { "CreatedAt", createDto.CreatedAt
+                        }
+                       }
+                    );
+
+                    MessageBox.Show("Group has been Created Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async void btnCreateSubGroup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (BtnCreateSubGroup.Text == "Update")
+                {
+
+                    var id = Convert.ToInt32(dgvSubGroup.CurrentRow.Cells[colSubGroupID.Name].Value);
+                    var updateDto = new UpdateProductMetadataDTO
+                    {
+                        Description = txtSubGroupDesc.Text,
+                        Status = rbActiveSub.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+
+                    await UpdateAsync(id, updateDto, "SUBGROUP_TRANSACTION");
+
+                    //Updating the local datagridview after update
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                      dgvSubGroup,
+                      id,
+                      new Dictionary<string, object>
+                        {
+                            { "Description", updateDto.Description },
+                            { "Status", updateDto.Status},
+                            { "UpdatedAt", updateDto.UpdatedAt }
+                        }
+                    );
+
+                    MessageBox.Show("SubGroup updated successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (BtnCreateSubGroup.Text == "Create")
+                {
+                    if (dgvGroup.CurrentRow == null)
+                    {
+                        MessageBox.Show("Please select a parent group first.", "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    var parentId = Convert.ToInt32(dgvGroup.CurrentRow.Cells[colID.Name].Value);
+                    var createDto = new CreateProductMetadataDTO
+                    {
+                        Code = txtSubGroupCode.Text,
+                        Description = txtDescription.Text,
+                        Type = Codetype.SUBGROUP, 
+                        Status = rbActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        ParentId = parentId,
+                        CreatedAt = DateTime.UtcNow
+                    };
+                    await CreateAsync(createDto,"SUBGROUP_TRANSACTION");
+
+                    var id = Convert.ToInt32(dgvSubGroup.CurrentRow.Cells[colSubGroupID.Name].Value);
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                        dgvSubGroup,
+                        id,
+                        new Dictionary<string, object>
+                        {
+                            { "Id",createDto.Id }, // Temporary ID, will be updated after API response
+                            { "Code", createDto.Code },
+                            { "Description", createDto.Description },
+                            { "Type", createDto.Type },
+                            { "Status", createDto.Status },
+                            { "ParentId", parentId },
+                            { "CreatedAt", createDto.CreatedAt }
+                        }
+                    );
+                    // Success message handled inside SaveOrUpdateGroupAsync
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void BtnClearGroup_Click(object sender, EventArgs e)
+        {
+            txtGroupCode.Text = "";
+            txtDescription.Text = "";
+            rbActive.Checked = true;
+            rbInactive.Checked = false;
+            BtnCreateGroup.Text = "Create";
+        }
+
+        private void BtnClearSubGroup_Click(object sender, EventArgs e)
+        {
+            txtSubGroupCode.Text = "";
+            txtSubGroupDesc.Text = "";
+            rbActiveSub.Checked = true;
+            rbInactive.Checked = false;
+            BtnCreateSubGroup.Text = "Create";
+        }
+
     }
 }

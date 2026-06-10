@@ -38,8 +38,8 @@
             tabPage1 = new TabPage();
             panel2 = new Panel();
             panel3 = new Panel();
-            button1 = new Button();
-            button2 = new Button();
+            BtnClearSubGroup = new Button();
+            BtnCreateSubGroup = new Button();
             rbInactiveSub = new RadioButton();
             rbActiveSub = new RadioButton();
             label5 = new Label();
@@ -61,7 +61,7 @@
             label3 = new Label();
             dgvGroup = new DataGridView();
             colID = new DataGridViewTextBoxColumn();
-            colClose = new DataGridViewImageColumn();
+            colDeleteGroup = new DataGridViewImageColumn();
             Code = new DataGridViewTextBoxColumn();
             Description = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
@@ -75,8 +75,8 @@
             label1 = new Label();
             label12 = new Label();
             txtDescription = new TextBox();
-            button4 = new Button();
-            button3 = new Button();
+            BtnClearGroup = new Button();
+            BtnCreateGroup = new Button();
             tabPage2 = new TabPage();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -125,8 +125,8 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(button1);
-            panel3.Controls.Add(button2);
+            panel3.Controls.Add(BtnClearSubGroup);
+            panel3.Controls.Add(BtnCreateSubGroup);
             panel3.Controls.Add(rbInactiveSub);
             panel3.Controls.Add(rbActiveSub);
             panel3.Controls.Add(label5);
@@ -140,37 +140,39 @@
             panel3.Size = new Size(1331, 38);
             panel3.TabIndex = 30;
             // 
-            // button1
+            // BtnClearSubGroup
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.BackColor = SystemColors.Control;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Tahoma", 10.5F);
-            button1.ForeColor = Color.Black;
-            button1.Location = new Point(1254, 1);
-            button1.Name = "button1";
-            button1.Size = new Size(74, 34);
-            button1.TabIndex = 41;
-            button1.Text = "Edit";
-            button1.UseVisualStyleBackColor = false;
+            BtnClearSubGroup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClearSubGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnClearSubGroup.BackColor = SystemColors.Control;
+            BtnClearSubGroup.FlatAppearance.BorderSize = 0;
+            BtnClearSubGroup.FlatStyle = FlatStyle.Flat;
+            BtnClearSubGroup.Font = new Font("Tahoma", 10.5F);
+            BtnClearSubGroup.ForeColor = Color.Black;
+            BtnClearSubGroup.Location = new Point(1166, 3);
+            BtnClearSubGroup.Name = "BtnClearSubGroup";
+            BtnClearSubGroup.Size = new Size(74, 34);
+            BtnClearSubGroup.TabIndex = 41;
+            BtnClearSubGroup.Text = "Clear";
+            BtnClearSubGroup.UseVisualStyleBackColor = false;
+            BtnClearSubGroup.Click += BtnClearSubGroup_Click;
             // 
-            // button2
+            // BtnCreateSubGroup
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button2.BackColor = Color.Navy;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Tahoma", 10.5F);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(1162, 1);
-            button2.Name = "button2";
-            button2.Size = new Size(88, 34);
-            button2.TabIndex = 40;
-            button2.Text = "Create";
-            button2.UseVisualStyleBackColor = false;
+            BtnCreateSubGroup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnCreateSubGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnCreateSubGroup.BackColor = Color.Navy;
+            BtnCreateSubGroup.FlatAppearance.BorderSize = 0;
+            BtnCreateSubGroup.FlatStyle = FlatStyle.Flat;
+            BtnCreateSubGroup.Font = new Font("Tahoma", 10.5F);
+            BtnCreateSubGroup.ForeColor = Color.White;
+            BtnCreateSubGroup.Location = new Point(1242, 2);
+            BtnCreateSubGroup.Name = "BtnCreateSubGroup";
+            BtnCreateSubGroup.Size = new Size(88, 34);
+            BtnCreateSubGroup.TabIndex = 40;
+            BtnCreateSubGroup.Text = "Create";
+            BtnCreateSubGroup.UseVisualStyleBackColor = false;
+            BtnCreateSubGroup.Click += btnCreateSubGroup_Click;
             // 
             // rbInactiveSub
             // 
@@ -408,7 +410,7 @@
             dgvGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvGroup.ColumnHeadersHeight = 30;
             dgvGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvGroup.Columns.AddRange(new DataGridViewColumn[] { colID, colClose, Code, Description, colStatus, colCreate, colCreateBy });
+            dgvGroup.Columns.AddRange(new DataGridViewColumn[] { colID, colDeleteGroup, Code, Description, colStatus, colCreate, colCreateBy });
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = Color.White;
             dataGridViewCellStyle6.Font = new Font("Tahoma", 10F);
@@ -425,7 +427,8 @@
             dgvGroup.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvGroup.Size = new Size(1329, 258);
             dgvGroup.TabIndex = 0;
-            dgvGroup.CellClick += dgvGroup_CellContentClick;
+            dgvGroup.CellClick += dgvGroup_CellClick;
+            dgvGroup.CellContentClick += dgvGroup_CellContentClick;
             dgvGroup.CellDoubleClick += dgvGroup_CellDoubleClick;
             // 
             // colID
@@ -437,13 +440,13 @@
             colID.Visible = false;
             colID.Width = 150;
             // 
-            // colClose
+            // colDeleteGroup
             // 
-            colClose.HeaderText = "";
-            colClose.Image = Properties.Resources.icons8_cross_symbol_24;
-            colClose.MinimumWidth = 8;
-            colClose.Name = "colClose";
-            colClose.Width = 35;
+            colDeleteGroup.HeaderText = "";
+            colDeleteGroup.Image = Properties.Resources.icons8_cross_symbol_24;
+            colDeleteGroup.MinimumWidth = 8;
+            colDeleteGroup.Name = "colDeleteGroup";
+            colDeleteGroup.Width = 35;
             // 
             // Code
             // 
@@ -501,8 +504,8 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(txtDescription);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
+            panel1.Controls.Add(BtnClearGroup);
+            panel1.Controls.Add(BtnCreateGroup);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 298);
             panel1.Name = "panel1";
@@ -583,37 +586,39 @@
             txtDescription.Size = new Size(426, 31);
             txtDescription.TabIndex = 25;
             // 
-            // button4
+            // BtnClearGroup
             // 
-            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button4.BackColor = SystemColors.Control;
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Tahoma", 10.5F);
-            button4.ForeColor = Color.Black;
-            button4.Location = new Point(1254, 1);
-            button4.Name = "button4";
-            button4.Size = new Size(74, 34);
-            button4.TabIndex = 22;
-            button4.Text = "Edit";
-            button4.UseVisualStyleBackColor = false;
+            BtnClearGroup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClearGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnClearGroup.BackColor = SystemColors.Control;
+            BtnClearGroup.FlatAppearance.BorderSize = 0;
+            BtnClearGroup.FlatStyle = FlatStyle.Flat;
+            BtnClearGroup.Font = new Font("Tahoma", 10.5F);
+            BtnClearGroup.ForeColor = Color.Black;
+            BtnClearGroup.Location = new Point(1164, 1);
+            BtnClearGroup.Name = "BtnClearGroup";
+            BtnClearGroup.Size = new Size(74, 34);
+            BtnClearGroup.TabIndex = 22;
+            BtnClearGroup.Text = "Clear";
+            BtnClearGroup.UseVisualStyleBackColor = false;
+            BtnClearGroup.Click += BtnClearGroup_Click;
             // 
-            // button3
+            // BtnCreateGroup
             // 
-            button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button3.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button3.BackColor = Color.Navy;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Tahoma", 10.5F);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(1162, 1);
-            button3.Name = "button3";
-            button3.Size = new Size(88, 34);
-            button3.TabIndex = 21;
-            button3.Text = "Create";
-            button3.UseVisualStyleBackColor = false;
+            BtnCreateGroup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnCreateGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnCreateGroup.BackColor = Color.Navy;
+            BtnCreateGroup.FlatAppearance.BorderSize = 0;
+            BtnCreateGroup.FlatStyle = FlatStyle.Flat;
+            BtnCreateGroup.Font = new Font("Tahoma", 10.5F);
+            BtnCreateGroup.ForeColor = Color.White;
+            BtnCreateGroup.Location = new Point(1241, 1);
+            BtnCreateGroup.Name = "BtnCreateGroup";
+            BtnCreateGroup.Size = new Size(88, 34);
+            BtnCreateGroup.TabIndex = 21;
+            BtnCreateGroup.Text = "Create";
+            BtnCreateGroup.UseVisualStyleBackColor = false;
+            BtnCreateGroup.Click += BtnCreateGroup_Click;
             // 
             // tabPage2
             // 
@@ -658,8 +663,8 @@
         private TabPage tabPage2;
         private DataGridView dgvGroup;
         private Panel panel1;
-        private Button button4;
-        private Button button3;
+        private Button BtnClearGroup;
+        private Button BtnCreateGroup;
         private RadioButton rbInactive;
         private RadioButton rbActive;
         private Label label2;
@@ -673,8 +678,8 @@
         private Label label4;
         private Label label3;
         private Panel panel3;
-        private Button button1;
-        private Button button2;
+        private Button BtnClearSubGroup;
+        private Button BtnCreateSubGroup;
         private RadioButton rbInactiveSub;
         private RadioButton rbActiveSub;
         private Label label5;
@@ -691,7 +696,7 @@
         private DataGridViewTextBoxColumn colSubCreateDate;
         private DataGridViewTextBoxColumn colSubCreateBy;
         private DataGridViewTextBoxColumn colID;
-        private DataGridViewImageColumn colClose;
+        private DataGridViewImageColumn colDeleteGroup;
         private DataGridViewTextBoxColumn Code;
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn colStatus;
