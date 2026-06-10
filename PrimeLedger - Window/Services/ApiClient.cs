@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using PrimeLedger.Shared.DTO;
 using System.Configuration;
 using System.Text;
 

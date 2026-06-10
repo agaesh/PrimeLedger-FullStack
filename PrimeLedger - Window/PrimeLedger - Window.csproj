@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LoadingIndicator.WinForms" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrimeLedger.Shared\PrimeLedger.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
