@@ -175,12 +175,20 @@ namespace PrimeLedger___Window
                 if (e.RowIndex < 0) return;
 
                 var row = dgvSubGroup.Rows[e.RowIndex];
-
+                //Setting the values to the textboxes
                 txtSubGroupCode.Text = row.Cells[colSubGroupCode.Name]?.Value?.ToString();
                 txtSubGroupDesc.Text = row.Cells[colSubGroupDescription.Name]?.Value?.ToString();
-
                 rbActiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "active";
                 rbInactiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "inactive";
+                //Changing the button text to Update, Later useful for update functionality
+                BtnCreateSubGroup.Text = "Update";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        }
 
             }
             catch (Exception ex)
