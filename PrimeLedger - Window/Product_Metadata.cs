@@ -149,10 +149,12 @@ namespace PrimeLedger___Window
                 if (e.RowIndex < 0) return;
 
                 var parentId = Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value);
-
                 var data = await LoadCodeType("SUBGROUP", parentId);
+                var BindingList = new BindingList<ProductMetadataDTO>(data);
+
+                var BindingSource = new BindingSource(BindingList, null);
                 dgvSubGroup.AutoGenerateColumns = false;
-                dgvSubGroup.DataSource = data;
+                dgvSubGroup.DataSource = BindingSource;
 
             }
             catch (Exception ex)
