@@ -1,7 +1,12 @@
 ﻿
+using LoadingIndicator;
+using LoadingIndicator.WinForms;
 using Newtonsoft.Json;
+using PrimeLedger.Helpers;
+using PrimeLedger.Shared.DTO;
+using PrimeLedger.Shared.DTO.Products;
+using PrimeLedger.Shared.Enums;
 using PrimeLedger___Window.Services;
-using PrimeLedger_Window.DTO;
 using System.ComponentModel;
 
 namespace PrimeLedger___Window
@@ -10,20 +15,36 @@ namespace PrimeLedger___Window
     {
         private List<ProductMetadataDTO> _groupData;
         private ApiClient _client;
+        BindingList<ProductMetadataDTO>? BindingList;
+        private LongOperation _loading;
+
         public Product_Metadata()
         {
             InitializeComponent();
             _groupData = new List<ProductMetadataDTO>();
             _client = new ApiClient();
+            _loading = new LongOperation(this);
         }
 
         private async void Product_Metadata_Load(object sender, EventArgs e)
         {
             try
             {
+                using (_loading.Start())
+                {
+                    await Task.Delay(3000);
                 _groupData = await LoadCodeType("GROUP");
+                }
+
                 dgvGroup.AutoGenerateColumns = false;
-                dgvGroup.DataSource = _groupData;
+
+                var bindingList = _groupData != null
+                ? new BindingList<ProductMetadataDTO>(_groupData)
+                : new BindingList<ProductMetadataDTO>();
+
+                var bindingSource = new BindingSource(bindingList, null);
+                dgvGroup.DataSource = bindingSource;
+
             }
             catch (Exception ex)
             {
