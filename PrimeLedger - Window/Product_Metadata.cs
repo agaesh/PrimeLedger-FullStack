@@ -56,7 +56,13 @@ namespace PrimeLedger___Window
             return codeType switch
             {
                 "GROUP" => "/group",
+                "GROUP_TRANSACTION" => $"/group/{id}",
                 "SUBGROUP" when id.HasValue => $"/group/{id}/subgroups",
+                "SUBGROUP_TRANSACTION" => $"/subgroup/{id}",
+                "BRAND"=> $"/brand/{id}",
+                "BRAND_TRANSACTION" => $"/brand/{id}",
+                "CATEGORY" => $"brand/{id}/category/",
+                "CATEGORY_TRANSACTION" => $"category/{id}",
                 _ => throw new ArgumentException("Invalid codeType or missing id")
             };
         }
