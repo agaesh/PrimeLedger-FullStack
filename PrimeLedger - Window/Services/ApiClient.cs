@@ -43,6 +43,32 @@ namespace PrimeLedger___Window.Services
             var json = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResponse>(json);
         }
+        public async Task PutAsync<TRequest>(string endpoint, TRequest data)
+        {
+            var jsonContent = new StringContent(
+                JsonConvert.SerializeObject(data),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await _client.PutAsync(_baseUrl + endpoint, jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException($"PUT failed: {response.StatusCode}");
+        }
+
+        public async Task DeleteAsync(string endpoint)
+        {
+            var response = await _client.DeleteAsync(_baseUrl + endpoint);
+
+            if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<string>>(json);
+
+                throw new Exception(result?.Message ?? "Delete failed");
+            }
+    }
     }
 
 }
