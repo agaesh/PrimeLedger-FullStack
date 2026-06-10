@@ -102,8 +102,10 @@ namespace PrimeLedger___Window
                 txtGroupCode.Text = record.Code.ToString();
                 txtDescription.Text = record.Description.ToString();
 
-                rbActive.Checked = record.Status.ToLower() == "active";
-                rbInactive.Checked = record.Status.ToLower() == "inactive";
+                rbActive.Checked = record.Status == StatusEnum.ACTIVE;
+                rbInactive.Checked = record.Status == StatusEnum.INACTIVE;
+
+                BtnCreateGroup.Text = "Update";
             }
             catch (Exception ex)
             {
