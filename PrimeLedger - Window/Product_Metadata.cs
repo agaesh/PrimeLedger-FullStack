@@ -111,6 +111,35 @@ namespace PrimeLedger___Window
             }
         }
 
+        private async void dgvGroup_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0) return;
+                if (e.ColumnIndex != colDeleteGroup.Index) return;
+
+                int id = Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value);
+
+                await _client.DeleteAsync($"/group/{id}");
+
+                MessageBox.Show($"Group with ID {id} has been deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                if(dgvGroup.DataSource is BindingSource bs && bs.List is BindingList<ProductMetadataDTO> list)
+                {
+                    var itemToRemove = list.FirstOrDefault(g => g.Id == id);
+                    if (itemToRemove != null)
+                    {
+                        list.Remove(itemToRemove);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private async void dgvGroup_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
