@@ -57,7 +57,7 @@ namespace PrimeAPI.Repositories
             if (entity == null) return false;
 
             // Soft delete: mark as deleted instead of removing
-            entity.Status = StatusEnum.INACTIVE; // or use StatusEnum.Deleted if you have an enum
+            entity.isDeleted = true;
             entity.UpdatedAt = DateTime.UtcNow;
 
             _context.ProductMetadata.Update(entity);

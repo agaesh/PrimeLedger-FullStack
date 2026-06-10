@@ -34,6 +34,7 @@ namespace PrimeAPI.Domain
 
         public ICollection<ProductMetadata> Children { get; set; } = new List<ProductMetadata>();
 
+        public bool? isDeleted { get; set;} 
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
