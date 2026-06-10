@@ -30,10 +30,10 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             panel2 = new Panel();
@@ -49,13 +49,6 @@
             txtSubGroupDesc = new TextBox();
             label4 = new Label();
             dgvSubGroup = new DataGridView();
-            colSubGroupID = new DataGridViewTextBoxColumn();
-            colCloseSub = new DataGridViewImageColumn();
-            colSubGroupCode = new DataGridViewTextBoxColumn();
-            colSubGroupDescription = new DataGridViewTextBoxColumn();
-            colSubStatus = new DataGridViewTextBoxColumn();
-            colSubCreateDate = new DataGridViewTextBoxColumn();
-            colSubCreateBy = new DataGridViewTextBoxColumn();
             pnlGroup = new Panel();
             BtnClose = new Button();
             label3 = new Label();
@@ -78,6 +71,13 @@
             BtnClearGroup = new Button();
             BtnCreateGroup = new Button();
             tabPage2 = new TabPage();
+            colSubGroupID = new DataGridViewTextBoxColumn();
+            colDeleteSubGroup = new DataGridViewImageColumn();
+            colSubGroupCode = new DataGridViewTextBoxColumn();
+            colSubGroupDescription = new DataGridViewTextBoxColumn();
+            colSubStatus = new DataGridViewTextBoxColumn();
+            colSubCreateDate = new DataGridViewTextBoxColumn();
+            colSubCreateBy = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             panel2.SuspendLayout();
@@ -273,7 +273,7 @@
             dgvSubGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvSubGroup.ColumnHeadersHeight = 34;
             dgvSubGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvSubGroup.Columns.AddRange(new DataGridViewColumn[] { colSubGroupID, colCloseSub, colSubGroupCode, colSubGroupDescription, colSubStatus, colSubCreateDate, colSubCreateBy });
+            dgvSubGroup.Columns.AddRange(new DataGridViewColumn[] { colSubGroupID, colDeleteSubGroup, colSubGroupCode, colSubGroupDescription, colSubStatus, colSubCreateDate, colSubCreateBy });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Tahoma", 10F);
@@ -291,69 +291,7 @@
             dgvSubGroup.Size = new Size(1330, 244);
             dgvSubGroup.TabIndex = 2;
             dgvSubGroup.CellClick += dgvSubGroup_CellClick;
-            // 
-            // colSubGroupID
-            // 
-            colSubGroupID.DataPropertyName = "id";
-            colSubGroupID.HeaderText = "colID";
-            colSubGroupID.MinimumWidth = 8;
-            colSubGroupID.Name = "colSubGroupID";
-            colSubGroupID.Visible = false;
-            colSubGroupID.Width = 150;
-            // 
-            // colCloseSub
-            // 
-            colCloseSub.HeaderText = "";
-            colCloseSub.Image = Properties.Resources.icons8_cross_symbol_24;
-            colCloseSub.MinimumWidth = 8;
-            colCloseSub.Name = "colCloseSub";
-            colCloseSub.Width = 35;
-            // 
-            // colSubGroupCode
-            // 
-            colSubGroupCode.DataPropertyName = "code";
-            colSubGroupCode.HeaderText = "Code";
-            colSubGroupCode.MinimumWidth = 8;
-            colSubGroupCode.Name = "colSubGroupCode";
-            colSubGroupCode.ReadOnly = true;
-            colSubGroupCode.Width = 150;
-            // 
-            // colSubGroupDescription
-            // 
-            colSubGroupDescription.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colSubGroupDescription.DataPropertyName = "description";
-            colSubGroupDescription.HeaderText = "Description";
-            colSubGroupDescription.MinimumWidth = 8;
-            colSubGroupDescription.Name = "colSubGroupDescription";
-            colSubGroupDescription.ReadOnly = true;
-            // 
-            // colSubStatus
-            // 
-            colSubStatus.DataPropertyName = "status";
-            colSubStatus.HeaderText = "Status";
-            colSubStatus.MinimumWidth = 8;
-            colSubStatus.Name = "colSubStatus";
-            colSubStatus.ReadOnly = true;
-            colSubStatus.Width = 110;
-            // 
-            // colSubCreateDate
-            // 
-            colSubCreateDate.DataPropertyName = "createdAt";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            colSubCreateDate.DefaultCellStyle = dataGridViewCellStyle2;
-            colSubCreateDate.HeaderText = "Create Date";
-            colSubCreateDate.MinimumWidth = 8;
-            colSubCreateDate.Name = "colSubCreateDate";
-            colSubCreateDate.ReadOnly = true;
-            colSubCreateDate.Width = 150;
-            // 
-            // colSubCreateBy
-            // 
-            colSubCreateBy.HeaderText = "Create By";
-            colSubCreateBy.MinimumWidth = 8;
-            colSubCreateBy.Name = "colSubCreateBy";
-            colSubCreateBy.Visible = false;
-            colSubCreateBy.Width = 150;
+            dgvSubGroup.CellContentClick += dgvSubGroup_CellContentClick;
             // 
             // pnlGroup
             // 
@@ -630,6 +568,69 @@
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // colSubGroupID
+            // 
+            colSubGroupID.DataPropertyName = "id";
+            colSubGroupID.HeaderText = "colID";
+            colSubGroupID.MinimumWidth = 8;
+            colSubGroupID.Name = "colSubGroupID";
+            colSubGroupID.Visible = false;
+            colSubGroupID.Width = 150;
+            // 
+            // colDeleteSubGroup
+            // 
+            colDeleteSubGroup.HeaderText = "";
+            colDeleteSubGroup.Image = Properties.Resources.icons8_cross_symbol_24;
+            colDeleteSubGroup.MinimumWidth = 8;
+            colDeleteSubGroup.Name = "colDeleteSubGroup";
+            colDeleteSubGroup.Width = 35;
+            // 
+            // colSubGroupCode
+            // 
+            colSubGroupCode.DataPropertyName = "code";
+            colSubGroupCode.HeaderText = "Code";
+            colSubGroupCode.MinimumWidth = 8;
+            colSubGroupCode.Name = "colSubGroupCode";
+            colSubGroupCode.ReadOnly = true;
+            colSubGroupCode.Width = 150;
+            // 
+            // colSubGroupDescription
+            // 
+            colSubGroupDescription.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colSubGroupDescription.DataPropertyName = "description";
+            colSubGroupDescription.HeaderText = "Description";
+            colSubGroupDescription.MinimumWidth = 8;
+            colSubGroupDescription.Name = "colSubGroupDescription";
+            colSubGroupDescription.ReadOnly = true;
+            // 
+            // colSubStatus
+            // 
+            colSubStatus.DataPropertyName = "status";
+            colSubStatus.HeaderText = "Status";
+            colSubStatus.MinimumWidth = 8;
+            colSubStatus.Name = "colSubStatus";
+            colSubStatus.ReadOnly = true;
+            colSubStatus.Width = 110;
+            // 
+            // colSubCreateDate
+            // 
+            colSubCreateDate.DataPropertyName = "createdAt";
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            colSubCreateDate.DefaultCellStyle = dataGridViewCellStyle2;
+            colSubCreateDate.HeaderText = "Create Date";
+            colSubCreateDate.MinimumWidth = 8;
+            colSubCreateDate.Name = "colSubCreateDate";
+            colSubCreateDate.ReadOnly = true;
+            colSubCreateDate.Width = 150;
+            // 
+            // colSubCreateBy
+            // 
+            colSubCreateBy.HeaderText = "Create By";
+            colSubCreateBy.MinimumWidth = 8;
+            colSubCreateBy.Name = "colSubCreateBy";
+            colSubCreateBy.Visible = false;
+            colSubCreateBy.Width = 150;
+            // 
             // Product_Metadata
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -688,13 +689,6 @@
         private Label label7;
         private TextBox txtSubGroupDesc;
         private Button BtnClose;
-        private DataGridViewTextBoxColumn colSubGroupID;
-        private DataGridViewImageColumn colCloseSub;
-        private DataGridViewTextBoxColumn colSubGroupCode;
-        private DataGridViewTextBoxColumn colSubGroupDescription;
-        private DataGridViewTextBoxColumn colSubStatus;
-        private DataGridViewTextBoxColumn colSubCreateDate;
-        private DataGridViewTextBoxColumn colSubCreateBy;
         private DataGridViewTextBoxColumn colID;
         private DataGridViewImageColumn colDeleteGroup;
         private DataGridViewTextBoxColumn Code;
@@ -702,5 +696,12 @@
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colCreate;
         private DataGridViewTextBoxColumn colCreateBy;
+        private DataGridViewTextBoxColumn colSubGroupID;
+        private DataGridViewImageColumn colDeleteSubGroup;
+        private DataGridViewTextBoxColumn colSubGroupCode;
+        private DataGridViewTextBoxColumn colSubGroupDescription;
+        private DataGridViewTextBoxColumn colSubStatus;
+        private DataGridViewTextBoxColumn colSubCreateDate;
+        private DataGridViewTextBoxColumn colSubCreateBy;
     }
 }

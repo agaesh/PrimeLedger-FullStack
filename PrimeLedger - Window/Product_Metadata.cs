@@ -332,7 +332,7 @@ namespace PrimeLedger___Window
                     {
                         Code = txtSubGroupCode.Text,
                         Description = txtDescription.Text,
-                        Type = Codetype.SUBGROUP, 
+                        Type = Codetype.SUBGROUP,
                         Status = rbActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
                         ParentId = parentId,
                         CreatedAt = DateTime.UtcNow
@@ -380,5 +380,32 @@ namespace PrimeLedger___Window
             BtnCreateSubGroup.Text = "Create";
         }
 
+        private async void dgvSubGroup_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try { 
+                if (e.RowIndex < 0) return;
+                if (e.ColumnIndex != colDeleteSubGroup.Index) return;
+
+                int id = Convert.ToInt32(dgvSubGroup.Rows[e.RowIndex].Cells[colSubGroupID.Name].Value);
+
+                await _client.DeleteAsync($"/subgroup/{id}");
+
+                MessageBox.Show($"SubGroup with ID {id} has been deleted.", "Deleted",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (dgvSubGroup.DataSource is BindingSource bs && bs.List is BindingList<ProductMetadataDTO> list)
+                {
+                    var itemToRemove = list.FirstOrDefault(g => g.Id == id);
+                    if (itemToRemove != null)
+                    {
+                        list.Remove(itemToRemove);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
-}
+ }
