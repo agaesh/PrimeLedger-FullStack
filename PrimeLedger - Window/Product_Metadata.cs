@@ -114,16 +114,26 @@ namespace PrimeLedger___Window
         {
             try
             {
+                //prevent event triggering when user clicking the header row
                 if (e.RowIndex < 0) return;
+                // Check if the clicked cell is in the Delete Button column
                 if (e.ColumnIndex != colDeleteGroup.Index) return;
+                //Delete Confirmation
+                var messagebox = MessageBox.Show(
+                    "Are you sure you want to delete this record?",
+                    "Delete Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                //Delete Prevention when user click no
+                if (messagebox == DialogResult.No) return;
 
                 int id = Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value);
-
+                //calling the delete api method
                 await _client.DeleteAsync($"/group/{id}");
-
                 MessageBox.Show($"Group with ID {id} has been deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
+                //remove the deleted code from the datagridview
                 if(dgvGroup.DataSource is BindingSource bs && bs.List is BindingList<ProductMetadataDTO> list)
                 {
                     var itemToRemove = list.FirstOrDefault(g => g.Id == id);
@@ -382,17 +392,33 @@ namespace PrimeLedger___Window
 
         private async void dgvSubGroup_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            try { 
+            try
+            {
+                //prevent event triggering when user clicking the header row
                 if (e.RowIndex < 0) return;
+
+                // Check if the clicked cell is in the Delete Button column
                 if (e.ColumnIndex != colDeleteSubGroup.Index) return;
+
+                //Delete Confirmation
+                var messagebox = MessageBox.Show(
+                 "Are you sure you want to delete this record?",
+                 "Delete Confirmation",
+                 MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Question);
+
+                //Delete Prevention when user click no
+                if (messagebox == DialogResult.No) return;
 
                 int id = Convert.ToInt32(dgvSubGroup.Rows[e.RowIndex].Cells[colSubGroupID.Name].Value);
 
+                //calling the delete api method
                 await _client.DeleteAsync($"/subgroup/{id}");
 
                 MessageBox.Show($"SubGroup with ID {id} has been deleted.", "Deleted",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                //removing the deleted code from the datagridview
                 if (dgvSubGroup.DataSource is BindingSource bs && bs.List is BindingList<ProductMetadataDTO> list)
                 {
                     var itemToRemove = list.FirstOrDefault(g => g.Id == id);
