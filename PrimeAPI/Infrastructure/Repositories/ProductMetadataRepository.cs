@@ -56,11 +56,8 @@ namespace PrimeAPI.Repositories
             var entity = await _context.ProductMetadata.FindAsync(id);
             if (entity == null) return false;
 
-            // Soft delete: mark as deleted instead of removing
-            entity.isDeleted = true;
-            entity.UpdatedAt = DateTime.UtcNow;
-
-            _context.ProductMetadata.Update(entity);
+            // Hard delete: remove from database
+            _context.ProductMetadata.Remove(entity);
             await _context.SaveChangesAsync();
 
             return true;
