@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabGroupSubGroup = new TabPage();
             panel2 = new Panel();
@@ -95,8 +95,8 @@
             label16 = new Label();
             txtCategoryDesc = new TextBox();
             dgvCategory = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewImageColumn1 = new DataGridViewImageColumn();
+            colCategoryID = new DataGridViewTextBoxColumn();
+            colDeleteCategory = new DataGridViewImageColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
@@ -114,7 +114,7 @@
             label13 = new Label();
             txtBrandDesc = new TextBox();
             dgvBrand = new DataGridView();
-            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            colBrandID = new DataGridViewTextBoxColumn();
             dataGridViewImageColumn2 = new DataGridViewImageColumn();
             dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
@@ -314,25 +314,25 @@
             dgvSubGroup.AllowUserToResizeRows = false;
             dgvSubGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvSubGroup.BackgroundColor = Color.White;
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = Color.White;
-            dataGridViewCellStyle13.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = Color.White;
-            dataGridViewCellStyle13.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
-            dgvSubGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            dataGridViewCellStyle1.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvSubGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvSubGroup.ColumnHeadersHeight = 34;
             dgvSubGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvSubGroup.Columns.AddRange(new DataGridViewColumn[] { colSubGroupID, colDeleteSubGroup, colSubGroupCode, colSubGroupDescription, colSubStatus, colSubCreateDate, colSubCreateBy });
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = Color.White;
-            dataGridViewCellStyle15.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle15.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle15.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = Color.White;
-            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
-            dgvSubGroup.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvSubGroup.DefaultCellStyle = dataGridViewCellStyle3;
             dgvSubGroup.EnableHeadersVisualStyles = false;
             dgvSubGroup.Location = new Point(0, 37);
             dgvSubGroup.Name = "dgvSubGroup";
@@ -341,7 +341,7 @@
             dgvSubGroup.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvSubGroup.Size = new Size(1330, 244);
             dgvSubGroup.TabIndex = 2;
-            dgvSubGroup.CellClick += dgvSubGroup_CellClick;
+            dgvSubGroup.CellClick += dgv_CellClick;
             dgvSubGroup.CellContentClick += dgvSubGroup_CellContentClick;
             // 
             // colSubGroupID
@@ -391,8 +391,8 @@
             // colSubCreateDate
             // 
             colSubCreateDate.DataPropertyName = "createdAt";
-            dataGridViewCellStyle14.Format = "dd/MM/yyyy";
-            colSubCreateDate.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            colSubCreateDate.DefaultCellStyle = dataGridViewCellStyle2;
             colSubCreateDate.HeaderText = "Create Date";
             colSubCreateDate.MinimumWidth = 8;
             colSubCreateDate.Name = "colSubCreateDate";
@@ -453,25 +453,25 @@
             dgvGroup.AllowUserToResizeRows = false;
             dgvGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvGroup.BackgroundColor = Color.White;
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = Color.White;
-            dataGridViewCellStyle16.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = Color.White;
-            dataGridViewCellStyle16.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
-            dgvGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvGroup.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvGroup.ColumnHeadersHeight = 30;
             dgvGroup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvGroup.Columns.AddRange(new DataGridViewColumn[] { colID, colDeleteGroup, Code, Description, colStatus, colCreate, colCreateBy });
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = Color.White;
-            dataGridViewCellStyle18.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle18.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = Color.White;
-            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
-            dgvGroup.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvGroup.DefaultCellStyle = dataGridViewCellStyle6;
             dgvGroup.EnableHeadersVisualStyles = false;
             dgvGroup.Location = new Point(2, 39);
             dgvGroup.Name = "dgvGroup";
@@ -480,7 +480,7 @@
             dgvGroup.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvGroup.Size = new Size(1329, 258);
             dgvGroup.TabIndex = 0;
-            dgvGroup.CellClick += dgvGroup_CellClick;
+            dgvGroup.CellClick += dgv_CellClick;
             dgvGroup.CellContentClick += dgvGroup_CellContentClick;
             dgvGroup.CellDoubleClick += dgvGroup_CellDoubleClick;
             // 
@@ -531,8 +531,8 @@
             // colCreate
             // 
             colCreate.DataPropertyName = "createdAt";
-            dataGridViewCellStyle17.Format = "dd/MM/yyyy";
-            colCreate.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle5.Format = "dd/MM/yyyy";
+            colCreate.DefaultCellStyle = dataGridViewCellStyle5;
             colCreate.HeaderText = "Create Date";
             colCreate.MinimumWidth = 8;
             colCreate.Name = "colCreate";
@@ -699,49 +699,52 @@
             panel5.Controls.Add(txtCategoryDesc);
             panel5.Controls.Add(dgvCategory);
             panel5.Controls.Add(label8);
-            panel5.Location = new Point(0, 386);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(3, 383);
             panel5.Name = "panel5";
-            panel5.Size = new Size(1337, 271);
+            panel5.Size = new Size(1331, 275);
             panel5.TabIndex = 2;
             // 
             // BtnClearCategory
             // 
-            BtnClearCategory.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClearCategory.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnClearCategory.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BtnClearCategory.BackColor = SystemColors.Control;
             BtnClearCategory.FlatAppearance.BorderSize = 0;
             BtnClearCategory.FlatStyle = FlatStyle.Flat;
             BtnClearCategory.Font = new Font("Tahoma", 10.5F);
             BtnClearCategory.ForeColor = Color.Black;
-            BtnClearCategory.Location = new Point(1171, 236);
+            BtnClearCategory.Location = new Point(1170, 240);
             BtnClearCategory.Name = "BtnClearCategory";
             BtnClearCategory.Size = new Size(74, 34);
             BtnClearCategory.TabIndex = 48;
             BtnClearCategory.Text = "Clear";
             BtnClearCategory.UseVisualStyleBackColor = false;
+            BtnClearCategory.Click += BtnClearCategory_Click;
             // 
             // BtnCreateCategory
             // 
-            BtnCreateCategory.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnCreateCategory.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnCreateCategory.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BtnCreateCategory.BackColor = Color.Navy;
             BtnCreateCategory.FlatAppearance.BorderSize = 0;
             BtnCreateCategory.FlatStyle = FlatStyle.Flat;
             BtnCreateCategory.Font = new Font("Tahoma", 10.5F);
             BtnCreateCategory.ForeColor = Color.White;
-            BtnCreateCategory.Location = new Point(1248, 236);
+            BtnCreateCategory.Location = new Point(1242, 240);
             BtnCreateCategory.Name = "BtnCreateCategory";
             BtnCreateCategory.Size = new Size(88, 34);
             BtnCreateCategory.TabIndex = 47;
             BtnCreateCategory.Text = "Create";
             BtnCreateCategory.UseVisualStyleBackColor = false;
+            BtnCreateCategory.Click += BtnCreateCategory_Click;
             // 
             // rbCategoryInactive
             // 
-            rbCategoryInactive.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            rbCategoryInactive.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             rbCategoryInactive.AutoSize = true;
             rbCategoryInactive.Font = new Font("Tahoma", 10F);
-            rbCategoryInactive.Location = new Point(952, 238);
+            rbCategoryInactive.Location = new Point(952, 242);
             rbCategoryInactive.Name = "rbCategoryInactive";
             rbCategoryInactive.Size = new Size(106, 28);
             rbCategoryInactive.TabIndex = 46;
@@ -751,10 +754,10 @@
             // 
             // rbCategoryActive
             // 
-            rbCategoryActive.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            rbCategoryActive.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             rbCategoryActive.AutoSize = true;
             rbCategoryActive.Font = new Font("Tahoma", 10F);
-            rbCategoryActive.Location = new Point(861, 238);
+            rbCategoryActive.Location = new Point(861, 242);
             rbCategoryActive.Name = "rbCategoryActive";
             rbCategoryActive.Size = new Size(89, 28);
             rbCategoryActive.TabIndex = 45;
@@ -764,10 +767,10 @@
             // 
             // label14
             // 
-            label14.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label14.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label14.AutoSize = true;
             label14.Font = new Font("Tahoma", 10F);
-            label14.Location = new Point(791, 240);
+            label14.Location = new Point(791, 244);
             label14.Name = "label14";
             label14.Size = new Size(66, 24);
             label14.TabIndex = 44;
@@ -775,17 +778,19 @@
             // 
             // txtCategoryCode
             // 
+            txtCategoryCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             txtCategoryCode.BorderStyle = BorderStyle.FixedSingle;
-            txtCategoryCode.Location = new Point(68, 237);
+            txtCategoryCode.Location = new Point(68, 241);
             txtCategoryCode.Name = "txtCategoryCode";
             txtCategoryCode.Size = new Size(178, 31);
             txtCategoryCode.TabIndex = 43;
             // 
             // label15
             // 
+            label15.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label15.AutoSize = true;
             label15.Font = new Font("Tahoma", 10F);
-            label15.Location = new Point(7, 240);
+            label15.Location = new Point(7, 244);
             label15.Name = "label15";
             label15.Size = new Size(55, 24);
             label15.TabIndex = 42;
@@ -793,9 +798,10 @@
             // 
             // label16
             // 
+            label16.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label16.AutoSize = true;
             label16.Font = new Font("Tahoma", 10F);
-            label16.Location = new Point(245, 240);
+            label16.Location = new Point(245, 244);
             label16.Name = "label16";
             label16.Size = new Size(110, 24);
             label16.TabIndex = 41;
@@ -803,61 +809,65 @@
             // 
             // txtCategoryDesc
             // 
-            txtCategoryDesc.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtCategoryDesc.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             txtCategoryDesc.BorderStyle = BorderStyle.FixedSingle;
-            txtCategoryDesc.Location = new Point(361, 237);
+            txtCategoryDesc.Location = new Point(361, 241);
             txtCategoryDesc.Name = "txtCategoryDesc";
             txtCategoryDesc.Size = new Size(426, 31);
             txtCategoryDesc.TabIndex = 40;
             // 
             // dgvCategory
             // 
+            dgvCategory.AllowUserToAddRows = false;
             dgvCategory.AllowUserToResizeRows = false;
+            dgvCategory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCategory.BackgroundColor = Color.White;
-            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = Color.White;
-            dataGridViewCellStyle19.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle19.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = Color.White;
-            dataGridViewCellStyle19.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
-            dgvCategory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.White;
+            dataGridViewCellStyle7.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvCategory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvCategory.ColumnHeadersHeight = 30;
             dgvCategory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvCategory.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewImageColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
-            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = Color.White;
-            dataGridViewCellStyle21.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle21.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle21.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = Color.White;
-            dataGridViewCellStyle21.WrapMode = DataGridViewTriState.False;
-            dgvCategory.DefaultCellStyle = dataGridViewCellStyle21;
+            dgvCategory.Columns.AddRange(new DataGridViewColumn[] { colCategoryID, colDeleteCategory, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.White;
+            dataGridViewCellStyle9.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            dgvCategory.DefaultCellStyle = dataGridViewCellStyle9;
             dgvCategory.EnableHeadersVisualStyles = false;
             dgvCategory.Location = new Point(3, 37);
             dgvCategory.Name = "dgvCategory";
             dgvCategory.RowHeadersVisible = false;
             dgvCategory.RowHeadersWidth = 62;
             dgvCategory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCategory.Size = new Size(1331, 197);
+            dgvCategory.Size = new Size(1325, 201);
             dgvCategory.TabIndex = 31;
+            dgvCategory.CellClick += dgv_CellClick;
+            dgvCategory.CellContentClick += dgvCategory_CellContentClick;
             // 
-            // dataGridViewTextBoxColumn1
+            // colCategoryID
             // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "id";
-            dataGridViewTextBoxColumn1.HeaderText = "colID";
-            dataGridViewTextBoxColumn1.MinimumWidth = 8;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.Visible = false;
-            dataGridViewTextBoxColumn1.Width = 150;
+            colCategoryID.DataPropertyName = "id";
+            colCategoryID.HeaderText = "colID";
+            colCategoryID.MinimumWidth = 8;
+            colCategoryID.Name = "colCategoryID";
+            colCategoryID.Visible = false;
+            colCategoryID.Width = 150;
             // 
-            // dataGridViewImageColumn1
+            // colDeleteCategory
             // 
-            dataGridViewImageColumn1.HeaderText = "";
-            dataGridViewImageColumn1.Image = Properties.Resources.icons8_cross_symbol_24;
-            dataGridViewImageColumn1.MinimumWidth = 8;
-            dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            dataGridViewImageColumn1.Width = 35;
+            colDeleteCategory.HeaderText = "";
+            colDeleteCategory.Image = Properties.Resources.icons8_cross_symbol_24;
+            colDeleteCategory.MinimumWidth = 8;
+            colDeleteCategory.Name = "colDeleteCategory";
+            colDeleteCategory.Width = 35;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -889,8 +899,8 @@
             // dataGridViewTextBoxColumn5
             // 
             dataGridViewTextBoxColumn5.DataPropertyName = "createdAt";
-            dataGridViewCellStyle20.Format = "dd/MM/yyyy";
-            dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle8.Format = "dd/MM/yyyy";
+            dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle8;
             dataGridViewTextBoxColumn5.HeaderText = "Create Date";
             dataGridViewTextBoxColumn5.MinimumWidth = 8;
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
@@ -929,46 +939,49 @@
             panel4.Controls.Add(txtBrandDesc);
             panel4.Controls.Add(dgvBrand);
             panel4.Controls.Add(label9);
-            panel4.Location = new Point(0, 0);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(3, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(1337, 380);
+            panel4.Size = new Size(1331, 380);
             panel4.TabIndex = 1;
             // 
             // BtnClearBrand
             // 
-            BtnClearBrand.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnClearBrand.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnClearBrand.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BtnClearBrand.BackColor = SystemColors.Control;
             BtnClearBrand.FlatAppearance.BorderSize = 0;
             BtnClearBrand.FlatStyle = FlatStyle.Flat;
             BtnClearBrand.Font = new Font("Tahoma", 10.5F);
             BtnClearBrand.ForeColor = Color.Black;
-            BtnClearBrand.Location = new Point(1169, 344);
+            BtnClearBrand.Location = new Point(1163, 344);
             BtnClearBrand.Name = "BtnClearBrand";
             BtnClearBrand.Size = new Size(74, 34);
             BtnClearBrand.TabIndex = 41;
             BtnClearBrand.Text = "Clear";
             BtnClearBrand.UseVisualStyleBackColor = false;
+            BtnClearBrand.Click += BtnClearBrand_Click;
             // 
             // BtnCreateBrand
             // 
-            BtnCreateBrand.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnCreateBrand.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnCreateBrand.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BtnCreateBrand.BackColor = Color.Navy;
             BtnCreateBrand.FlatAppearance.BorderSize = 0;
             BtnCreateBrand.FlatStyle = FlatStyle.Flat;
             BtnCreateBrand.Font = new Font("Tahoma", 10.5F);
             BtnCreateBrand.ForeColor = Color.White;
-            BtnCreateBrand.Location = new Point(1246, 344);
+            BtnCreateBrand.Location = new Point(1240, 344);
             BtnCreateBrand.Name = "BtnCreateBrand";
             BtnCreateBrand.Size = new Size(88, 34);
             BtnCreateBrand.TabIndex = 40;
             BtnCreateBrand.Text = "Create";
             BtnCreateBrand.UseVisualStyleBackColor = false;
+            BtnCreateBrand.Click += BtnCreateBrand_Click;
             // 
             // rbBrandInactive
             // 
-            rbBrandInactive.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            rbBrandInactive.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             rbBrandInactive.AutoSize = true;
             rbBrandInactive.Font = new Font("Tahoma", 10F);
             rbBrandInactive.Location = new Point(953, 347);
@@ -981,7 +994,7 @@
             // 
             // rbBrandActive
             // 
-            rbBrandActive.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            rbBrandActive.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             rbBrandActive.AutoSize = true;
             rbBrandActive.Font = new Font("Tahoma", 10F);
             rbBrandActive.Location = new Point(862, 347);
@@ -994,7 +1007,7 @@
             // 
             // label10
             // 
-            label10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label10.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label10.AutoSize = true;
             label10.Font = new Font("Tahoma", 10F);
             label10.Location = new Point(792, 349);
@@ -1005,6 +1018,7 @@
             // 
             // txtBrandCode
             // 
+            txtBrandCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             txtBrandCode.BorderStyle = BorderStyle.FixedSingle;
             txtBrandCode.Location = new Point(69, 346);
             txtBrandCode.Name = "txtBrandCode";
@@ -1013,6 +1027,7 @@
             // 
             // label11
             // 
+            label11.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label11.AutoSize = true;
             label11.Font = new Font("Tahoma", 10F);
             label11.Location = new Point(8, 349);
@@ -1023,6 +1038,7 @@
             // 
             // label13
             // 
+            label13.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label13.AutoSize = true;
             label13.Font = new Font("Tahoma", 10F);
             label13.Location = new Point(246, 349);
@@ -1033,7 +1049,7 @@
             // 
             // txtBrandDesc
             // 
-            txtBrandDesc.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBrandDesc.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             txtBrandDesc.BorderStyle = BorderStyle.FixedSingle;
             txtBrandDesc.Location = new Point(362, 346);
             txtBrandDesc.Name = "txtBrandDesc";
@@ -1042,44 +1058,49 @@
             // 
             // dgvBrand
             // 
+            dgvBrand.AllowUserToAddRows = false;
             dgvBrand.AllowUserToResizeRows = false;
+            dgvBrand.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvBrand.BackgroundColor = Color.White;
-            dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = Color.White;
-            dataGridViewCellStyle22.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle22.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = Color.White;
-            dataGridViewCellStyle22.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = DataGridViewTriState.True;
-            dgvBrand.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = Color.White;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvBrand.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             dgvBrand.ColumnHeadersHeight = 30;
             dgvBrand.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvBrand.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn7, dataGridViewImageColumn2, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12 });
-            dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = Color.White;
-            dataGridViewCellStyle24.Font = new Font("Tahoma", 10F);
-            dataGridViewCellStyle24.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle24.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = Color.White;
-            dataGridViewCellStyle24.WrapMode = DataGridViewTriState.False;
-            dgvBrand.DefaultCellStyle = dataGridViewCellStyle24;
+            dgvBrand.Columns.AddRange(new DataGridViewColumn[] { colBrandID, dataGridViewImageColumn2, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12 });
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.White;
+            dataGridViewCellStyle12.Font = new Font("Tahoma", 10F);
+            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = Color.White;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
+            dgvBrand.DefaultCellStyle = dataGridViewCellStyle12;
             dgvBrand.EnableHeadersVisualStyles = false;
             dgvBrand.Location = new Point(3, 37);
             dgvBrand.Name = "dgvBrand";
             dgvBrand.RowHeadersVisible = false;
             dgvBrand.RowHeadersWidth = 62;
             dgvBrand.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBrand.Size = new Size(1331, 305);
+            dgvBrand.Size = new Size(1325, 305);
             dgvBrand.TabIndex = 31;
+            dgvBrand.CellClick += dgv_CellClick;
+            dgvBrand.CellContentClick += dgvBrand_CellContentClick;
+            dgvBrand.CellDoubleClick += dgvBrand_CellDoubleClick;
             // 
-            // dataGridViewTextBoxColumn7
+            // colBrandID
             // 
-            dataGridViewTextBoxColumn7.DataPropertyName = "id";
-            dataGridViewTextBoxColumn7.HeaderText = "colID";
-            dataGridViewTextBoxColumn7.MinimumWidth = 8;
-            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            dataGridViewTextBoxColumn7.Visible = false;
-            dataGridViewTextBoxColumn7.Width = 150;
+            colBrandID.DataPropertyName = "id";
+            colBrandID.HeaderText = "colID";
+            colBrandID.MinimumWidth = 8;
+            colBrandID.Name = "colBrandID";
+            colBrandID.Visible = false;
+            colBrandID.Width = 150;
             // 
             // dataGridViewImageColumn2
             // 
@@ -1119,8 +1140,8 @@
             // dataGridViewTextBoxColumn11
             // 
             dataGridViewTextBoxColumn11.DataPropertyName = "createdAt";
-            dataGridViewCellStyle23.Format = "dd/MM/yyyy";
-            dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle11.Format = "dd/MM/yyyy";
+            dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle11;
             dataGridViewTextBoxColumn11.HeaderText = "Create Date";
             dataGridViewTextBoxColumn11.MinimumWidth = 8;
             dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
@@ -1226,23 +1247,9 @@
         private DataGridViewTextBoxColumn colSubCreateBy;
         private Panel panel4;
         private DataGridView dgvBrand;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewImageColumn dataGridViewImageColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private Label label9;
         private Panel panel5;
         private DataGridView dgvCategory;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewImageColumn dataGridViewImageColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private Label label8;
         private RadioButton rbBrandInactive;
         private RadioButton rbBrandActive;
@@ -1262,5 +1269,19 @@
         private Button BtnCreateBrand;
         private Button BtnClearCategory;
         private Button BtnCreateCategory;
+        private DataGridViewTextBoxColumn colBrandID;
+        private DataGridViewImageColumn dataGridViewImageColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private DataGridViewTextBoxColumn colCategoryID;
+        private DataGridViewImageColumn colDeleteCategory;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
     }
 }
