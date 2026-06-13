@@ -215,8 +215,8 @@ namespace PrimeLedger___Window
                 if (e.RowIndex < 0) return;
 
                 var parentId = Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value);
-                var data = await LoadCodeType("SUBGROUP", parentId);
-                var BindingList = new BindingList<ProductMetadataDTO>(data);
+                _subgroupData = await LoadCodeType("SUBGROUP", parentId);
+                var BindingList = new BindingList<ProductMetadataDTO>(_subgroupData);
 
                 var BindingSource = new BindingSource(BindingList, null);
                 dgvSubGroup.AutoGenerateColumns = false;
@@ -297,7 +297,6 @@ namespace PrimeLedger___Window
                 {
                     var createDto = new CreateProductMetadataDTO
                     {
-
                         Code = txtGroupCode.Text,
                         Description = txtDescription.Text,
                         Type = Codetype.GROUP,
