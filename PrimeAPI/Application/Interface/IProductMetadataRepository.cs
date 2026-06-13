@@ -1,6 +1,7 @@
 ﻿
 using PrimeAPI.Domain;
 using PrimeLedger.Shared.Enums;
+using PrimeLedger.Shared.DTO.Products;
 
 namespace PrimeAPI.Application.Interface
 {
@@ -8,7 +9,7 @@ namespace PrimeAPI.Application.Interface
     {
         Task<ProductMetadata?> GetByIdAsync(int id);
         Task<List<ProductMetadata>> GetByCodeTypeAsync(Codetype codeType);
-        Task AddAsync(ProductMetadata entity);
+        Task<ProductMetadata> AddAsync(ProductMetadata entity);
 
         Task UpdateAsync(ProductMetadata entity);
 

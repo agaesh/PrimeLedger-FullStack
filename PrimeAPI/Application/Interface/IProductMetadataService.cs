@@ -12,7 +12,7 @@ namespace PrimeAPI.Application.Interface
 
         Task<ProductMetadata?> GetById(int id, Codetype type);
 
-        Task<CreateProductMetadataDTO> CreateAsync(CreateProductMetadataDTO entity, Codetype type);
+        Task<ProductMetadataDTO> CreateAsync(CreateProductMetadataDTO entity, Codetype type);
 
         Task<UpdateProductMetadataDTO> UpdateAsync(int id, UpdateProductMetadataDTO dto);
 
