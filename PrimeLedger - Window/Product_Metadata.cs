@@ -305,24 +305,9 @@ namespace PrimeLedger___Window
                         CreatedAt = DateTime.UtcNow
                     };
 
-                    var isSuccess = await CreateAsync(createDto, "GROUP_TRANSACTION");
-
-                    var id = Convert.ToInt32(dgvGroup.CurrentRow.Cells[colID.Name].Value);
-                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
-                        dgvGroup,
-                        id,
-                        new Dictionary<string, object>
-                        {
-                            { "Id",createDto.Id }, // Temporary ID, will be updated after API response
-                            { "Code", createDto.Code },
-                            { "Description", createDto.Description },
-                            { "Type", createDto.Type },
-                            { "Status", createDto.Status },
-                            { "ParentId", createDto.ParentId },
-                            { "CreatedAt", createDto.CreatedAt
-                        }
-                       }
-                    );
+                    var record = await CreateAsync(createDto, "GROUP_TRANSACTION");
+                    //Adding Item after create
+                    DataGridViewHelper.AddGridItem<ProductMetadataDTO>(dgvGroup, record);
 
                     MessageBox.Show("Group has been Created Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -384,22 +369,12 @@ namespace PrimeLedger___Window
                         ParentId = parentId,
                         CreatedAt = DateTime.UtcNow
                     };
-                    await CreateAsync(createDto,"SUBGROUP_TRANSACTION");
 
-                    var id = Convert.ToInt32(dgvSubGroup.CurrentRow.Cells[colSubGroupID.Name].Value);
-                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                    var record =await CreateAsync(createDto, "SUBGROUP_TRANSACTION");
+
+                    DataGridViewHelper.AddGridItem<ProductMetadataDTO>(
                         dgvSubGroup,
-                        id,
-                        new Dictionary<string, object>
-                        {
-                            { "Id",createDto.Id }, // Temporary ID, will be updated after API response
-                            { "Code", createDto.Code },
-                            { "Description", createDto.Description },
-                            { "Type", createDto.Type },
-                            { "Status", createDto.Status },
-                            { "ParentId", parentId },
-                            { "CreatedAt", createDto.CreatedAt }
-                        }
+                        record
                     );
                     // Success message handled inside SaveOrUpdateGroupAsync
                 }
@@ -681,4 +656,4 @@ namespace PrimeLedger___Window
         }
         #endregion
     }
- }
+}

@@ -85,7 +85,7 @@ namespace PrimeAPI.API.Controllers
                 var createdSub = await _service.CreateAsync(subGroup, Codetype.SUBGROUP);
 
                 return StatusCode(StatusCodes.Status201Created,
-                ApiResponse<CreateProductMetadataDTO>.SuccessResponse(createdSub,$"Subgroup '{subGroup.Code}' has been created successfully"));
+                ApiResponse<ProductMetadataDTO>.SuccessResponse(createdSub,$"Subgroup '{subGroup.Code}' has been created successfully"));
             }
             catch (Exception ex)
             {
