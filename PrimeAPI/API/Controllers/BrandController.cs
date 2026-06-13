@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrimeAPI.Application.Helpers;
 using PrimeAPI.Application.Service;
+using PrimeAPI.Application.Interface;
 using PrimeLedger.Shared.DTO.Products; // Fixed typo 'f' to 't
 using PrimeLedger.Shared.Enums;
 
@@ -11,9 +12,9 @@ namespace PrimeAPI.API.Controllers
     [ApiController]
     public class BrandController:ControllerBase
     {
-        private readonly ProductMetadataService _service;
+        private readonly IProductMetadataService _service;
 
-        public BrandController(ProductMetadataService service)
+        public BrandController(IProductMetadataService service)
         {
             _service = service;
         }
@@ -35,7 +36,7 @@ namespace PrimeAPI.API.Controllers
 
         [HttpGet("{BrandId}/categories")]
         public async Task<IActionResult> GetCategoryByBrand(int BrandId) {
-            var category = await _service.GetSubByParentCode(Codetype.SUBGROUP, BrandId);
+            var category = await _service.GetSubByParentCode(Codetype.CATEGORY, BrandId);
             return Ok(category);
         
         }
@@ -77,7 +78,7 @@ namespace PrimeAPI.API.Controllers
                 var CreateBrand = await _service.CreateAsync(brand, Codetype.BRAND);
                 return StatusCode(
                     StatusCodes.Status201Created,
-                    ApiResponse<CreateProductMetadataDTO>.SuccessResponse(
+                    ApiResponse<ProductMetadataDTO>.SuccessResponse(
                         CreateBrand,
                         $"Brand '{brand.Code}' has been created successfully."
                     )
