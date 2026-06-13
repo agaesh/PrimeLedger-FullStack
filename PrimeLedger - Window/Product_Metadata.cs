@@ -11,9 +11,18 @@ namespace PrimeLedger___Window
     public partial class Product_Metadata : Form
     {
         private List<ProductMetadataDTO> _groupData;
+        private List<ProductMetadataDTO> _subgroupData;
+        private List<ProductMetadataDTO> _brandData;
+        private List<ProductMetadataDTO> _categoryData;
         private ApiClient _client;
         BindingList<ProductMetadataDTO>? BindingList;
         private LongOperation _loading;
+
+        private bool IsGroupLoaded = false;
+        private bool IsSubGroupLoaded = false;
+        private bool IsBrandLoaded = false;
+        private bool IsCategoryLoaded = false;
+        private bool IsUomLoaded = false;
 
         public Product_Metadata()
         {
@@ -58,8 +67,8 @@ namespace PrimeLedger___Window
                 "SUBGROUP_TRANSACTION" => $"/subgroup/{id}",
                 "BRAND"=> $"/brand/{id}",
                 "BRAND_TRANSACTION" => $"/brand/{id}",
-                "CATEGORY" => $"brand/{id}/category/",
-                "CATEGORY_TRANSACTION" => $"category/{id}",
+                "CATEGORY" => $"/brand/{id}/categories",
+                "CATEGORY_TRANSACTION" => $"/category/{id}",
                 _ => throw new ArgumentException("Invalid codeType or missing id")
             };
         }
@@ -89,20 +98,70 @@ namespace PrimeLedger___Window
             }
         }
 
-        private void dgvGroup_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                if(e.RowIndex < 0) return;
-                var record = _groupData.Find(g => g.Id == Convert.ToInt32(dgvGroup.Rows[e.RowIndex].Cells[colID.Name].Value));
+                if (e.RowIndex < 0) return;
 
-                txtGroupCode.Text = record.Code.ToString();
-                txtDescription.Text = record.Description.ToString();
+                var dgv = sender as DataGridView;
+                if (dgv == null) return;
 
-                rbActive.Checked = record.Status == StatusEnum.ACTIVE;
-                rbInactive.Checked = record.Status == StatusEnum.INACTIVE;
 
-                BtnCreateGroup.Text = "Update";
+                switch (dgv.Name)
+                {
+                    case "dgvGroup":
+                        var groupId = Convert.ToInt32(dgv.Rows[e.RowIndex].Cells[colID.Name].Value);
+                        var groupRecord = _groupData.Find(g => g.Id == groupId);
+                        ProductMetadataHelper.MapToControls(
+                            groupRecord,
+                            txtGroupCode,
+                            txtDescription,
+                            rbActive,
+                            rbInactive,
+                            BtnCreateGroup
+                        );
+                        break;
+
+                    case "dgvSubGroup":
+                        var subGroupId = Convert.ToInt32(dgv.Rows[e.RowIndex].Cells[colSubGroupID.Name].Value);
+                        var subGroupRecord = _subgroupData.Find(sg => sg.Id == subGroupId);
+                        ProductMetadataHelper.MapToControls(
+                            subGroupRecord,
+                            txtSubGroupCode,
+                            txtSubGroupDesc,
+                            rbActiveSub,
+                            rbInactiveSub,
+                            BtnCreateSubGroup
+                        );
+                        break;
+
+                    case "dgvBrand":
+                        var BrandId = Convert.ToInt32(dgv.Rows[e.RowIndex].Cells[colBrandID.Name].Value);
+                        var brandRecord = _brandData.Find(b => b.Id == BrandId);
+                        ProductMetadataHelper.MapToControls(
+                            brandRecord,
+                            txtBrandCode,
+                            txtBrandDesc,
+                            rbBrandActive,
+                            rbBrandInactive,
+                            BtnCreateBrand
+                        );
+                        break;
+                    case "dgvCategory":
+                        var CategoryId = Convert.ToInt32(dgv.Rows[e.RowIndex].Cells[colCategoryID.Name].Value);
+                        var categoryRecord = _categoryData.Find(c => c.Id == CategoryId);
+                        ProductMetadataHelper.MapToControls(
+                            categoryRecord,
+                            txtCategoryCode,
+                            txtCategoryDesc,
+                            rbCategoryActive,
+                            rbCategoryInactive,
+                            BtnCreateCategory
+                        );
+                        break;
+
+                }
             }
             catch (Exception ex)
             {
@@ -174,28 +233,7 @@ namespace PrimeLedger___Window
         {
             this.Close();
         }
-
-        private void dgvSubGroup_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (e.RowIndex < 0) return;
-
-                var row = dgvSubGroup.Rows[e.RowIndex];
-                //Setting the values to the textboxes
-                txtSubGroupCode.Text = row.Cells[colSubGroupCode.Name]?.Value?.ToString();
-                txtSubGroupDesc.Text = row.Cells[colSubGroupDescription.Name]?.Value?.ToString();
-                rbActiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "active";
-                rbInactiveSub.Checked = row.Cells[colSubStatus.Name].Value?.ToString()?.ToLower() == "inactive";
-                //Changing the button text to Update, Later useful for update functionality
-                BtnCreateSubGroup.Text = "Update";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        public async Task<bool> CreateAsync(CreateProductMetadataDTO dto, string type)
+        public async Task<ProductMetadataDTO> CreateAsync(CreateProductMetadataDTO dto, string type)
         {
             try
             {
@@ -204,7 +242,7 @@ namespace PrimeLedger___Window
                     dto
                 );
 
-                return result.Success;
+                return result.Data;
             }
             catch (Exception)
             {
