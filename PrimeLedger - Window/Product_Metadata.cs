@@ -433,5 +433,215 @@ namespace PrimeLedger___Window
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private async void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabGroupSubGroup && !IsGroupLoaded)
+            {
+                using (_loading.Start())
+                {
+
+                    _groupData = await LoadCodeType("GROUP");
+                }
+                DataGridViewHelper.BindData(dgvGroup, _groupData);
+            }
+            else if (tabControl1.SelectedTab == tabBrandCategory && !IsBrandLoaded)
+            {
+
+                using (_loading.Start())
+                {
+
+                    _brandData = await LoadCodeType("BRAND");
+                }
+                DataGridViewHelper.BindData(dgvBrand, _brandData);
+                IsBrandLoaded = true;
+            }
+        }
+
+        #region "Brand Events"
+        private async void dgvBrand_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int BrandID = Convert.ToInt32(dgvBrand.SelectedRows[0].Cells[colBrandID.Name].Value);
+            _categoryData = await LoadCodeType("CATEGORY", BrandID);
+
+            DataGridViewHelper.BindData(dgvCategory, _categoryData);
+
+        }
+
+        private async void dgvBrand_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0) return;
+
+                int id = Convert.ToInt32(dgvBrand.SelectedRows[0].Cells[colBrandID.Name].Value);
+
+                await ProductMetadataHelper.DeleteRecordAsync(_client, BuildEndpoint("BRAND", null), id, dgvBrand, colBrandID.Name, "SubGroup");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnClearBrand_Click(object sender, EventArgs e)
+        {
+            txtBrandCode.Text = "";
+            txtBrandDesc.Text = "";
+            rbBrandActive.Checked = true;
+            rbBrandInactive.Checked = false;
+            BtnCreateBrand.Text = "Create";
+        }
+
+        private async void BtnCreateBrand_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (BtnCreateBrand.Text == "Update" && dgvBrand.CurrentRow != null)
+                {
+                    var id = Convert.ToInt32(dgvBrand.CurrentRow.Cells[colBrandID.Name].Value);
+                    var updateDto = new UpdateProductMetadataDTO
+                    {
+                        Description = txtBrandDesc.Text,
+                        Status = rbBrandActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+
+                    await UpdateAsync(id, updateDto, "BRAND_TRANSACTION");
+
+                    // Update DataGridView after update
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                        dgvBrand,
+                        id,
+                        new Dictionary<string, object>
+                        {
+                        { "Description", updateDto.Description },
+                        { "Status", updateDto.Status },
+                        { "UpdatedAt", updateDto.UpdatedAt }
+                        }
+                    );
+
+                    MessageBox.Show("Brand updated successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    var createDto = new CreateProductMetadataDTO
+                    {
+                        Code = txtBrandCode.Text,
+                        Description = txtBrandDesc.Text,
+                        Type = Codetype.BRAND,
+                        Status = rbBrandActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        ParentId = null,
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    var result = await CreateAsync(createDto, "BRAND_TRANSACTION");
+
+                    var id = Convert.ToInt32(dgvBrand.CurrentRow.Cells[colBrandID.Name].Value);
+
+                    DataGridViewHelper.AddGridItem<ProductMetadataDTO>(
+                      dgvBrand, result);
+
+                    MessageBox.Show("Brand has been Created Successfully.", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region "Category Events"
+
+        private async void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0) return;
+                if (e.ColumnIndex != colDeleteCategory.Index) return;
+                int id = Convert.ToInt32(dgvCategory.SelectedRows[0].Cells[colCategoryID.Name].Value);
+
+                await ProductMetadataHelper.DeleteRecordAsync(_client,"/category", id, dgvCategory, colCategoryID.Name, "Category");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void BtnClearCategory_Click(object sender, EventArgs e)
+        {
+            txtCategoryCode.Text = "";
+            txtCategoryDesc.Text = "";
+            rbCategoryActive.Checked = true;
+            rbCategoryInactive.Checked = false;
+            BtnCreateCategory.Text = "Create";
+        }
+        private async void BtnCreateCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (BtnCreateCategory.Text == "Update" && dgvCategory.CurrentRow != null)
+                {
+                    var id = Convert.ToInt32(dgvCategory.CurrentRow.Cells[colCategoryID.Name].Value);
+                    var updateDto = new UpdateProductMetadataDTO
+                    {
+                        Description = txtCategoryDesc.Text,
+                        Status = rbCategoryActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+
+                    await UpdateAsync(id, updateDto, "CATEGORY_TRANSACTION");
+
+                    // Update DataGridView after update
+                    DataGridViewHelper.UpdateGridItemProperties<ProductMetadataDTO>(
+                        dgvCategory,
+                        id,
+                        new Dictionary<string, object>
+                        {
+                        { "Description", updateDto.Description },
+                        { "Status", updateDto.Status },
+                        { "UpdatedAt", updateDto.UpdatedAt }
+                        }
+                    );
+
+                    MessageBox.Show("Category updated successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    var createDto = new CreateProductMetadataDTO
+                    {
+                        Code = txtCategoryCode.Text,
+                        Description = txtCategoryDesc.Text,
+                        Type = Codetype.CATEGORY,
+                        Status = rbCategoryActive.Checked ? StatusEnum.ACTIVE : StatusEnum.INACTIVE,
+                        ParentId = Convert.ToInt32(dgvBrand.SelectedRows[0].Cells[colBrandID.Name].Value),
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    var record = await CreateAsync(createDto, "CATEGORY_TRANSACTION");
+                    //Updateing the dgv after creating new category.
+                    DataGridViewHelper.AddGridItem<ProductMetadataDTO>(
+                      dgvCategory, record);
+                    //Success MessageBox after creating new category.
+                    MessageBox.Show("Category has been Created Successfully.", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
     }
  }
