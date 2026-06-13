@@ -31,8 +31,9 @@ namespace PrimeAPI.Application.Service
            return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<CreateProductMetadataDTO> CreateAsync(CreateProductMetadataDTO entity, Codetype type)
+        public async Task<ProductMetadataDTO> CreateAsync(CreateProductMetadataDTO entity, Codetype type)
         {
+     
             var productMetadata = new ProductMetadata
             {
                 Code = entity.Code,
@@ -43,16 +44,19 @@ namespace PrimeAPI.Application.Service
                 CreatedAt = DateTime.UtcNow
             };
 
-            await _repository.AddAsync(productMetadata);
+            // Save and return the actual entity with Id populated
+            var result = await _repository.AddAsync(productMetadata);
 
-            // Map back into DTO for return
-            var dto = new CreateProductMetadataDTO
+            // Map from the saved entity, not the request
+            var dto = new ProductMetadataDTO
             {
-                Code = productMetadata.Code,
-                Description = productMetadata.Description,
-                Type = (Codetype) productMetadata.type,
-                ParentId = productMetadata.ParentId,
-                CreatedAt = productMetadata.CreatedAt
+                Id = result.Id, // now populated
+                Code = result.Code,
+                Description = result.Description,
+                Type = result.type,
+                Status = result.Status,
+                ParentId = result.ParentId,
+                CreatedAt = result.CreatedAt
             };
 
             return dto;

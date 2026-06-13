@@ -33,12 +33,14 @@ namespace PrimeAPI.Repositories
         }
 
         // ✅ Add new entity
-        public async Task AddAsync(ProductMetadata entity)
+        public async Task<ProductMetadata> AddAsync(ProductMetadata entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             await _context.ProductMetadata.AddAsync(entity);
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         // ✅ Update existing entity

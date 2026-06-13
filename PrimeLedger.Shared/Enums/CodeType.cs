@@ -9,6 +9,7 @@ namespace PrimeLedger.Shared.Enums
         GROUP,
         SUBGROUP,
         BRAND,
+        CATEGORY,
         UOM
     }
 }
