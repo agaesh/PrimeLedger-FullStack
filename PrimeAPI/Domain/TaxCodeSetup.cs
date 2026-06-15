@@ -17,7 +17,7 @@ namespace PrimeAPI.Domain
         public decimal TaxRate { get; set; } // 6.00
 
         [Column("tax_type")]
-        public TaxCodeType type { get; set; }
+        public TaxCodeType Type { get; set; }
 
         // Audit fields
         [Column("created_date")]

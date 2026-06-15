@@ -46,7 +46,7 @@
                 entity.HasIndex(e => new { e.Code})
                       .IsUnique();
 
-                entity.Property(e => e.type)
+                entity.Property(e => e.Type)
                       .HasConversion<string>()
                       .HasMaxLength(10);
             });
