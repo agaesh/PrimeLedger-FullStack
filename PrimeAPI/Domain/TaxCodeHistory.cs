@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PrimeAPI.Domain
 {
@@ -18,7 +19,5 @@ namespace PrimeAPI.Domain
         public string TaxDirection { get; set; } // Sales or Purchase
         [Column("tax_account_id")]
         public int? TaxAccountId { get; set; } // FK to Chart of Accounts
-
-        public TaxCodeSetup TaxCodeSetup { get; set; }
     }
 }
