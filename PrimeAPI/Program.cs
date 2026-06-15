@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using PrimeAPI.Application.Interface;
 using PrimeAPI.Application.Service;
 using PrimeAPI.Infrasfructure;
+using PrimeAPI.Infrastructure.Repositories;
+using PrimeAPI.Infrastructure.Services;
 using PrimeAPI.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,9 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<IProductMetadataService,ProductMetadataService>();
 builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository>();
+
+builder.Services.AddScoped<ITaxCodeSetupService, TaxCodeSetupService>();
+builder.Services.AddScoped<ITaxCodeSetupRepository, TaxCodeSetupRepository>();
 
 var app = builder.Build();
 
