@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrimeAPI.Infrasfructure;
 
 #nullable disable
 
-namespace PrimeAPI.Migrations
+namespace PrimeAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260615035834_add-taxcodesetup-taxcodehistory-migration")]
+    partial class addtaxcodesetuptaxcodehistorymigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,10 +131,6 @@ namespace PrimeAPI.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("code");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_date");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -140,10 +139,6 @@ namespace PrimeAPI.Migrations
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("tax_rate");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("updated_date");
 
                     b.Property<string>("type")
                         .IsRequired()
