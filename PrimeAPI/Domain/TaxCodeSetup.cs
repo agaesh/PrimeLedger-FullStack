@@ -18,6 +18,13 @@ namespace PrimeAPI.Domain
 
         [Column("tax_type")]
         public TaxCodeType type { get; set; }
+
+        // Audit fields
+        [Column("created_date")]
+        public DateTime CreatedDate { get; set; }
+
+        [Column("updated_date")]
+        public DateTime? UpdatedDate { get; set; }
         public ICollection<TaxCodeHistory> Histories { get; set; }
     }
 }
