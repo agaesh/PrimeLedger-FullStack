@@ -19,7 +19,7 @@ namespace PrimeAPI.Domain
         public NormalBalance NormalBalance { get; set; }
 
         [Column("parent_acc_id")]
-        public Guid? ParentAccountId { get; set; }
+        public int? ParentAccountId { get; set; }
 
         [Column("is_allow_posting")]
         public bool AllowPosting { get; set; } = true;
@@ -31,7 +31,7 @@ namespace PrimeAPI.Domain
         public DateTime CreatedDate { get; set; }
 
         [Column("updated_date")]
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         // 🔑 Navigation properties
         public GlAccount ParentAccount { get; set; }
