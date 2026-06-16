@@ -12,6 +12,7 @@
 
         public DbSet<TaxCodeSetup> TaxCodeSetups { get; set; }
         public DbSet<TaxCodeHistory> TaxCodeHistories { get; set; }
+        public DbSet<GlAccount> GlAccount { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,6 +56,23 @@
             {
                 entity.HasKey(e => e.Id);
                 // Tell EF Core to store the Enum as a string/text in the DB
+            });
+
+            modelBuilder.Entity<GlAccount>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.AccountType)
+                      .HasConversion<string>()
+                      .HasMaxLength(50);
+                entity.Property(e => e.NormalBalance)
+                      .HasConversion<string>()
+                      .HasMaxLength(6);
+
+                entity.HasOne(e => e.ParentAccount)
+                      .WithMany(e => e.ChildAccounts)
+                      .HasForeignKey(e => e.ParentAccountId)
+                      .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete
             });
         }
     }
