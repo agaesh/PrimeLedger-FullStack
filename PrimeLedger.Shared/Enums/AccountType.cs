@@ -9,7 +9,7 @@ namespace PrimeLedger.Shared.Enums
         ASSET,
         EXPENSE,
         EQUITY,
-        LIABILTY,
+        LIABILITY,
         REVENUE,
     }
 }
