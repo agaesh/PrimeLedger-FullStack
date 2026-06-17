@@ -15,9 +15,14 @@ namespace PrimeAPI.Domain
         public DateTime? EffectiveTo { get; set; }
         [Column("is_active")]
         public bool IsActive { get; set; }
-        [Column("tax_direction")]
-        public string TaxDirection { get; set; } // Sales or Purchase
-        [Column("tax_account_id")]
-        public int? TaxAccountId { get; set; } // FK to Chart of Accounts
+       
+        [Column("purchase_account_id")]
+        public int? PurchaseAccountId { get; set; }
+
+        [Column("sales_account_id")]
+        public int? SalesAccountId { get; set; }
+
+        public GlAccount PurchaseAccount { get; set; }
+        public GlAccount SalesAccount  { get; set; }
     }
 }
