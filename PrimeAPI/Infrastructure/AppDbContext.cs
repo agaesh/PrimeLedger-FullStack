@@ -50,12 +50,34 @@
                 entity.Property(e => e.Type)
                       .HasConversion<string>()
                       .HasMaxLength(10);
+
+               
             });
 
             modelBuilder.Entity<TaxCodeHistory>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 // Tell EF Core to store the Enum as a string/text in the DB
+
+                // Foreign key relationship to GlAccount
+                entity.HasOne(e => e.PurchaseAccount)
+                      .WithMany() // GlAccount can be used by many histories as purchase
+                      .HasForeignKey(e => e.PurchaseAccountId);
+
+                entity.HasOne(e => e.SalesAccount)
+                      .WithMany() // GlAccount can also be used by many histories as sales
+                      .HasForeignKey(e => e.SalesAccountId);
+
+                // Unique constraint: one account per setup
+                entity.HasIndex(e => new { e.TaxCodeSetupId, e.PurchaseAccountId })
+                      .IsUnique();
+
+                // Add check constraint via ToTable
+                entity.ToTable("TaxCodeHistory", tb =>
+                {
+                    tb.HasCheckConstraint("CK_TaxCodeHistory_DifferentAccounts",
+                        "[purchase_account_id] <> [sales_account_id]");
+                });
             });
 
             modelBuilder.Entity<GlAccount>(entity =>
