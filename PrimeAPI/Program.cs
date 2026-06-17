@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrimeAPI.Application.Interface;
 using PrimeAPI.Application.Service;
+using PrimeAPI.Application.Services;
 using PrimeAPI.Infrasfructure;
 using PrimeAPI.Infrastructure.Repositories;
 using PrimeAPI.Infrastructure.Services;
@@ -13,10 +14,22 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
+// Register AppDbContext. Allow tests to override the provider via configuration
+// by setting "UseInMemory" to true in the configuration. Default is SQL Server.
+var useInMemory = builder.Configuration.GetValue<bool>("UseInMemory", false);
+if (useInMemory)
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("TestDb")
+    );
+}
+else
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DefaultConnection")
+        ));
+}
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -31,6 +44,9 @@ builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository
 
 builder.Services.AddScoped<ITaxCodeSetupService, TaxCodeSetupService>();
 builder.Services.AddScoped<ITaxCodeSetupRepository, TaxCodeSetupRepository>();
+
+builder.Services.AddScoped<IGLAccountService, GLAccountService>();
+builder.Services.AddScoped<IGLAccountRepository, GLAccountRepository>();
 
 var app = builder.Build();
 

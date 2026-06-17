@@ -12,7 +12,7 @@
 
         public DbSet<TaxCodeSetup> TaxCodeSetups { get; set; }
         public DbSet<TaxCodeHistory> TaxCodeHistories { get; set; }
-        public DbSet<GlAccount> GlAccount { get; set; }
+        public DbSet<GlAccount> GlAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
