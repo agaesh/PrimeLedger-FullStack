@@ -14,16 +14,13 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// Register AppDbContext. Allow tests to override the provider via configuration
-// by setting "UseInMemory" to true in the configuration. Default is SQL Server.
-var useInMemory = builder.Configuration.GetValue<bool>("UseInMemory", false);
-if (useInMemory)
-{
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseInMemoryDatabase("TestDb")
-    );
-}
-else
+// Register AppDbContext. 
+// Only register if not in Integration Testing mode - the test factory will override this.
+// Check both environment and configuration to allow test overrides.
+var isIntegrationTest = builder.Environment.IsEnvironment("IntegrationTesting") || 
+                        builder.Configuration.GetValue<bool>("IntegrationTesting", false);
+
+if (!isIntegrationTest)
 {
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(
