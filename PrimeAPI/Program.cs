@@ -39,11 +39,14 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<IProductMetadataService,ProductMetadataService>();
 builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository>();
 
-builder.Services.AddScoped<ITaxCodeSetupService, TaxCodeSetupService>();
-builder.Services.AddScoped<ITaxCodeSetupRepository, TaxCodeSetupRepository>();
+builder.Services.AddScoped<ITaxTreatmentService, TaxTreatmentService>();
+builder.Services.AddScoped<ITaxTreatmentRepository, TaxTreatmentRepository>();
 
 builder.Services.AddScoped<IGLAccountService, GLAccountService>();
 builder.Services.AddScoped<IGLAccountRepository, GLAccountRepository>();
+
+builder.Services.AddScoped<ITaxRegimeRepository, TaxRegimeRepository>();
+builder.Services.AddScoped<ITaxRegimeService, TaxRegimeService>();
 
 var app = builder.Build();
 
