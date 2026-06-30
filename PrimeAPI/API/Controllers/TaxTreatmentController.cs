@@ -8,7 +8,7 @@ using PrimeLedger.Shared.DTO;
 namespace PrimeAPI.Controllers
 {
     [ApiController]
-    [Route("PrimeApi/tax-treatment")]
+    [Route("PrimeApi/tax-treatment/")]
     public class TaxTreatmentController : ControllerBase
     {
         private readonly ITaxTreatmentService _service;
@@ -29,8 +29,8 @@ namespace PrimeAPI.Controllers
             return Ok(setup);
         }
 
-        // GET: api/tax/code/{code}
-        [HttpGet("code/{code}")]
+        // GET: api/tax/{code}
+        [HttpGet("{code}")]
         public async Task<ActionResult<TaxTreatment>> GetByCode(string code)
         {
             var setup = await _service.GetByCodeAsync(code);
@@ -40,7 +40,7 @@ namespace PrimeAPI.Controllers
             return Ok(setup);
         }
 
-        // GET: api/tax
+        // GET: PrimeAPi/tax-treatment
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaxTreatment>>> GetAll()
         {
@@ -48,15 +48,15 @@ namespace PrimeAPI.Controllers
             return Ok(setups);
         }
 
-        // GET: api/tax/type/{type}
-        [HttpGet("type/{type}")]
+        // GET: primeapi/tax-treatment/{type}
+        [HttpGet("{type}")]
         public async Task<ActionResult<IEnumerable<TaxTreatment>>> GetByType(PrimeLedger.Shared.Enums.TaxCodeType type)
         {
             var setups = await _service.GetByTypeAsync(type);
             return Ok(setups);
         }
 
-        // POST: primeapi/tax
+        // POST: primeapi/tax-treatment
         [HttpPost]
         public async Task<ActionResult<ApiResponse<TaxTreatmentCreateDTO>>> Create([FromBody] TaxTreatmentCreateDTO setup)
         {
@@ -83,7 +83,7 @@ namespace PrimeAPI.Controllers
             }
         }
 
-        // DELETE: api/tax/{id}
+        // DELETE: primeapi/tax-treatment/{id}
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
