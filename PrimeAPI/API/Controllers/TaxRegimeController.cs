@@ -33,7 +33,7 @@ namespace PrimeAPI.API.Controllers
         }
 
 
-        // GET: PrimeApi/tax-regim/history/{id}
+        // GET: PrimeApi/tax-regim/{id}
         [HttpGet("{id:int}")]
         public async Task<ActionResult<TaxRegime>> GetByIdGlobal(int id)
         {
