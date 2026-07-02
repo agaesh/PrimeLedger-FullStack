@@ -10,8 +10,8 @@
         }
         public DbSet<ProductMetadata> ProductMetadata { get; set; }
 
-        public DbSet<TaxCodeSetup> TaxCodeSetups { get; set; }
-        public DbSet<TaxCodeHistory> TaxCodeHistories { get; set; }
+        public DbSet<TaxTreatment> TaxTreatments { get; set; }
+        public DbSet<TaxRegime> TaxRegime { get; set; }
         public DbSet<GlAccount> GlAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@
                     .IsUnique();
             });
 
-            modelBuilder.Entity<TaxCodeSetup>(entity =>
+            modelBuilder.Entity<TaxTreatment>(entity =>
             {
                 // Unique index to prevent exact duplicates
                 entity.HasIndex(e => new { e.Code})
@@ -51,33 +51,38 @@
                       .HasConversion<string>()
                       .HasMaxLength(10);
 
-               
-            });
-
-            modelBuilder.Entity<TaxCodeHistory>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                // Tell EF Core to store the Enum as a string/text in the DB
-
                 // Foreign key relationship to GlAccount
-                entity.HasOne(e => e.PurchaseAccount)
-                      .WithMany() // GlAccount can be used by many histories as purchase
-                      .HasForeignKey(e => e.PurchaseAccountId);
+                entity.HasOne(e => e.PurchaseGL)
+                      .WithMany()
+                      .HasForeignKey(e => e.PurchaseGLId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(e => e.SalesAccount)
-                      .WithMany() // GlAccount can also be used by many histories as sales
-                      .HasForeignKey(e => e.SalesAccountId);
+                entity.HasOne(e => e.SalesGL)
+                      .WithMany()
+                      .HasForeignKey(e => e.SalesGLId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
-                // Unique constraint: one account per setup
-                entity.HasIndex(e => new { e.TaxCodeSetupId, e.PurchaseAccountId })
-                      .IsUnique();
+                // Only one active regime per CodeType
+                entity.HasIndex(e => e.Code)
+                      .HasFilter("[is_active] = 1")
+                      .IsUnique()
+                      .HasDatabaseName("UQ_TaxRegime_Active");
 
                 // Add check constraint via ToTable
-                entity.ToTable("TaxCodeHistory", tb =>
+                entity.ToTable("TaxTreatment", tb =>
                 {
-                    tb.HasCheckConstraint("CK_TaxCodeHistory_DifferentAccounts",
-                        "[purchase_account_id] <> [sales_account_id]");
+                    tb.HasCheckConstraint("CK_TaxTreatment_DifferentAccounts",
+                        "[purchase_gl_id] <> [sales_gl_id]");
                 });
+                });
+
+            modelBuilder.Entity<TaxRegime>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.CodeType)
+                      .HasConversion<string>()
+                      .HasMaxLength(10);
             });
 
             modelBuilder.Entity<GlAccount>(entity =>
