@@ -6,6 +6,7 @@ using PrimeLedger.Shared.DTO.TaxRegime;
 using PrimeLedger.Shared.Enums;
 using System.Net.WebSockets;
 using System.Reflection.Metadata;
+using System.Linq;
 
 namespace PrimeAPI.Application.Services
 {
@@ -51,45 +52,19 @@ namespace PrimeAPI.Application.Services
             if (history == null)
                 throw new ArgumentNullException(nameof(history));
 
-       
-            var ActiveRegime = await _repository.GetActiveRegime();
 
-            if (ActiveRegime is not null && ActiveRegime.IsActive)
+            if (history.IsActive)
             {
-                if (ActiveRegime.EffectiveTo is null && history.IsActive)
+                var activeRegime = await _repository.GetActiveRegime();
+                if (activeRegime is not null)
                 {
-                    throw new InvalidOperationException("Please Update Old regim's effective to Date before insert new regime");
-                }
-
-                if (history.IsActive)
-                {
-                    throw new InvalidOperationException("Please Innactive old regime first before insert new active regime");
-                }
-
-                bool overlaps =
-                   // Case 1: New EffectiveFrom falls inside the active regime
-                   (history.EffectiveFrom >= ActiveRegime.EffectiveFrom &&
-                    (ActiveRegime.EffectiveTo == null || history.EffectiveFrom <= ActiveRegime.EffectiveTo))
-
-                   ||
-
-                   // Case 2: New EffectiveTo falls inside the active regime
-                   (history.EffectiveTo.HasValue &&
-                    (ActiveRegime.EffectiveTo == null || history.EffectiveTo.Value >= ActiveRegime.EffectiveFrom) &&
-                    history.EffectiveTo.Value <= (ActiveRegime.EffectiveTo ?? DateTime.MaxValue))
-
-                   ||
-
-                   // Case 3: New period fully covers the active regime
-                   (history.EffectiveTo.HasValue &&
-                    history.EffectiveFrom <= ActiveRegime.EffectiveFrom &&
-                    history.EffectiveTo.Value >= (ActiveRegime.EffectiveTo ?? DateTime.MaxValue));
-
-                if (overlaps)
-                {
-                    throw new InvalidOperationException(
-                        "Effective period overlaps with the current active regime record."
-                    );
+                    // Prevent inserting while another regime is active or open-ended
+                    if (activeRegime.IsActive || activeRegime.EffectiveTo is null)
+                    {
+                        throw new InvalidOperationException(
+                            "Cannot insert new regime while current regime is active or has no end date."
+                        );
+                    }
                 }
             }
 
@@ -101,11 +76,8 @@ namespace PrimeAPI.Application.Services
                 IsActive = history.IsActive,
             };
 
-            var Createdhistory = await _repository.AddAsync(entity);
-           
-            return Createdhistory;
+            return await _repository.AddAsync(entity);
         }
-
         public async Task UpdateAsync(TaxRegime history)
         {
             // Same validation rules apply on update
