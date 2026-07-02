@@ -90,13 +90,8 @@ namespace PrimeAPI.API.Controllers
 
         // DELETE: PrimeApi/tax-regim/{id}
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(TaxCodeType CodeType, int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (!Enum.IsDefined(typeof(TaxCodeType), CodeType))
-            {
-                return BadRequest("Invalid Tax Code Type has been provided");
-            }
-
             if (id == 0)
             {
                 throw new InvalidOperationException("Invalid Tax History Id has been provided");
