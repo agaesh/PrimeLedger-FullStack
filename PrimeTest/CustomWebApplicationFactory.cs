@@ -7,10 +7,11 @@ using PrimeAPI.Infrasfructure;
 using PrimeAPI.Domain;
 using PrimeLedger.Shared.Enums;
 using System.Linq;
+using System;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
-        private static readonly string TestDatabaseName = "TestDb";
+    // Use per-factory unique database name to ensure tests do not share state
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -30,9 +31,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                     services.Remove(descriptor);
                 }
 
-                // Register with InMemory provider using a consistent database name
+                // Register with InMemory provider using a unique database name per factory instance
+                var testDatabaseName = $"TestDb_{Guid.NewGuid():N}";
                 services.AddDbContext<AppDbContext>(options =>
-                    options.UseInMemoryDatabase(TestDatabaseName));
+                    options.UseInMemoryDatabase(testDatabaseName));
 
             // Build provider to resolve DbContext
             var sp = services.BuildServiceProvider();
