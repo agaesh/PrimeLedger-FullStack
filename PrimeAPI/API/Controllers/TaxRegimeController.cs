@@ -81,8 +81,8 @@ namespace PrimeAPI.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] TaxRegime regime)
         {
-            if (id != regime.Id )
-                return BadRequest(new { message = "ID mismatch" });
+            if (id <= 0)
+                return BadRequest(new { message = "Invalid ID" });
 
             await _service.UpdateAsync(regime);
             return NoContent();
