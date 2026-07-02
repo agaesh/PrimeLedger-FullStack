@@ -101,7 +101,7 @@ namespace PrimeTest.Integration_Tests
 
                 // Act: GET the created entity by code (since Create returns DTO, not domain entity with Id)
                 Console.WriteLine($"[ACTION] Fetching tax treatment by code: {apiResponse.Data.Code}");
-                var getResponse = await _client.GetAsync($"/PrimeApi/tax-treatment/code/{apiResponse.Data.Code}");
+                var getResponse = await _client.GetAsync($"/PrimeApi/tax-treatment/{apiResponse.Data.Code}");
 
                 // Assert: Ensure retrieval succeeded
                 Console.WriteLine($"[RESULT] Get Response Status: {getResponse.StatusCode}");
