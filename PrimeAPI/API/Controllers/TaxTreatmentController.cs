@@ -49,7 +49,7 @@ namespace PrimeAPI.Controllers
         }
 
         // GET: primeapi/tax-treatment/{type}
-        [HttpGet("{type}")]
+        [HttpGet("type/{type}")]
         public async Task<ActionResult<IEnumerable<TaxTreatment>>> GetByType(PrimeLedger.Shared.Enums.TaxCodeType type)
         {
             var setups = await _service.GetByTypeAsync(type);
