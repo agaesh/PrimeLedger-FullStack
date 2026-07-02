@@ -278,7 +278,7 @@ namespace PrimeAPI.Tests.Integration
 
                 var history = new TaxRegime
                 {
-                    CodeType =  TaxCodeType.GST,    
+                    CodeType=TaxCodeType.GST,
                     EffectiveFrom = DateTime.UtcNow,
                     EffectiveTo = DateTime.UtcNow.AddMonths(1),
                     IsActive = true
@@ -287,7 +287,7 @@ namespace PrimeAPI.Tests.Integration
 
                 Console.WriteLine($"[ACTION] Updating tax regime Id 1: IsActive=1");
 
-                var updateResponse = await _client.PutAsJsonAsync($"/PrimeApi/tax-regime/{created.Id}", created);
+                var updateResponse = await _client.PutAsJsonAsync($"/PrimeApi/tax-regime/1", history);
                 Console.WriteLine($"[RESULT] Update Response Status: {updateResponse.StatusCode}");
                 Assert.Equal(HttpStatusCode.NoContent, updateResponse.StatusCode);
 
@@ -312,6 +312,7 @@ namespace PrimeAPI.Tests.Integration
             {
                 Console.WriteLine($"\n=== Starting Test: {testName} ===");
 
+                // Arrange: create a new regime
                 var history = new TaxRegime
                 {
                     CodeType = TaxCodeType.GST,
@@ -320,22 +321,28 @@ namespace PrimeAPI.Tests.Integration
                     IsActive = true,
                 };
 
-                // Create
-                Console.WriteLine($"[ACTION] Creating tax regime: CodeType={history.CodeType}, IsActive={history.IsActive}");
+                Console.WriteLine("[ACTION] Creating tax regime");
                 var createResponse = await _client.PostAsJsonAsync("/PrimeApi/tax-regime", history);
+                createResponse.EnsureSuccessStatusCode();
+
                 var created = await createResponse.Content.ReadFromJsonAsync<TaxRegime>();
+                Assert.NotNull(created);
                 Console.WriteLine($"[RESULT] Tax regime created with Id: {created.Id}");
 
-                // First delete → should succeed
-                Console.WriteLine($"[ACTION] Deleting tax regime with Id: {created.Id}");
+                // Act: first delete should succeed
+                Console.WriteLine($"[ACTION] Deleting tax regime with Id={created.Id}");
                 var deleteResponse = await _client.DeleteAsync($"/PrimeApi/tax-regime/{created.Id}");
                 Console.WriteLine($"[RESULT] First delete response: {deleteResponse.StatusCode}");
+
+                // Assert: first delete returns NoContent
                 Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-                // Second delete → should return NotFound
-                Console.WriteLine($"[ACTION] Attempting to delete the same regime again (should return NotFound)");
+                // Act: second delete should fail with NotFound
+                Console.WriteLine("[ACTION] Attempting to delete the same regime again");
                 var deleteAgainResponse = await _client.DeleteAsync($"/PrimeApi/tax-regime/{created.Id}");
                 Console.WriteLine($"[RESULT] Second delete response: {deleteAgainResponse.StatusCode}");
+
+                // Assert: second delete returns NotFound
                 Assert.Equal(HttpStatusCode.NotFound, deleteAgainResponse.StatusCode);
 
                 Console.WriteLine("=== TEST PASSED ===\n");
