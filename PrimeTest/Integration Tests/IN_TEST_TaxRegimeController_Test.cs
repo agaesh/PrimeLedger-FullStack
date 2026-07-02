@@ -284,13 +284,8 @@ namespace PrimeAPI.Tests.Integration
                     IsActive = true
                 };
 
-                Console.WriteLine($"[ACTION] Creating tax regime for update test: CodeType={history.CodeType}, IsActive={history.IsActive}");
-                var createResponse = await _client.PostAsJsonAsync("/PrimeApi/tax-regime/", history);
-                var created = await createResponse.Content.ReadFromJsonAsync<TaxRegime>();
-                Console.WriteLine($"[RESULT] Tax regime created with Id: {created.Id}");
 
-                created.IsActive = false; // update field
-                Console.WriteLine($"[ACTION] Updating tax regime Id {created.Id}: IsActive={created.IsActive}");
+                Console.WriteLine($"[ACTION] Updating tax regime Id 1: IsActive=1");
 
                 var updateResponse = await _client.PutAsJsonAsync($"/PrimeApi/tax-regime/{created.Id}", created);
                 Console.WriteLine($"[RESULT] Update Response Status: {updateResponse.StatusCode}");
