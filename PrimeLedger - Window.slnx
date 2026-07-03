@@ -1,4 +1,8 @@
 <Solution>
+  <Project Path="client/client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
   <Project Path="PrimeAPI/PrimeAPI.csproj" Id="ecef0392-2699-4761-8b11-108d039d19a5" />
   <Project Path="PrimeLedger - Window/PrimeLedger - Window.csproj" />
   <Project Path="PrimeLedger.Shared/PrimeLedger.Shared.csproj" Id="1e5f08f7-0a06-4bf1-a7b8-0d7c32fb6097" />
