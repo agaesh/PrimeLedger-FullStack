@@ -1,0 +1,154 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #4b5563;
+    border-right: 1px solid #d9dde3;
+    color: black;
+}
+/* ===========================
+   Logo
+=========================== */
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 32px 24px;
+}
+
+.sidebar-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: #111827;
+    color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.sidebar-logo-icon i {
+    width: 20px;
+    height: 20px;
+}
+
+.sidebar-logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    color: white;
+}
+
+/* ===========================
+   Navigation
+=========================== */
+
+.sidebar-nav {
+    padding: 0 16px;
+    overflow-y:scroll;
+}
+.sidebar-nav-parent svg{
+    margin-right:10px;
+}
+.sidebar-nav-parent {
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:10px 0px;
+}
+
+.sidebar-nav a{
+    color:white;
+    font-weight:bold;
+}
+
+.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 10px;
+    transition: .25s;
+}
+
+.sidebar-nav-item:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.sidebar-nav-item.active {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.sidebar-nav-item i {
+    width: 16px;
+    height: 16px;
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .25s;
+    background-color:floralwhite;
+}
+
+.sidebar-profile:hover {
+    background: #f9fafb;
+}
+
+.sidebar-profile-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+}
+
+.sidebar-profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-profile-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-profile-role {
+    font-size: 15px;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-profile-arrow {
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+}
