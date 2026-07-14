@@ -60,12 +60,21 @@
     color:white;
     display:flex;
     align-items:center;
-    padding:10px 0px;
+    padding: 12px 8px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    letter-spacing: .3px;
+}
+.sidebar-nav-submenu {
+    background-color: #374151;
+    padding:10px;
+    border-radius:12px;
 }
 
 .sidebar-nav a{
     color:white;
-    font-weight:bold;
+    font-weight: 500;
 }
 
 .sidebar-nav-item {

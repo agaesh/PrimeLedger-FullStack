@@ -1,6 +1,7 @@
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
-import { Landmark,LogOut} from 'lucide-react';
+import { Landmark, LogOut, ChevronDown, ChevronRight } from 'lucide-react';
+import { useState } from 'react'; 
 import sidebarItems from './SidebarItems';
 function Sidebar() {
     return (
@@ -32,14 +33,26 @@ function Sidebar() {
                                 </Link>
                             ) : (
                                 <>
-                                    <div className="sidebar-nav-parent">
+                                    <div
+                                        className="sidebar-nav-parent"
+                                        onClick={() => setOpen(!open)}
+                                        style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
+                                    >
                                         <Icon size={20} strokeWidth={2.2} />
                                         <span>{item.title}</span>
+                                            <div class="sidebar-nav-parent-icon" style={{ marginLeft: "auto" }}>
+                                                {open ? (
+                                                    <ChevronDown size={16} strokeWidth={2} />
+                                                ) : (
+                                                    <ChevronRight size={16} strokeWidth={2} />
+                                                )}
+                                            </div>
                                     </div>
 
+                                    {open && (
+                                        <div className="sidebar-nav-submenu">
                                     {item.children?.map((child) => {
                                         const ChildIcon = child.icon;
-
                                         return (
                                             <Link
                                                 key={child.title}
@@ -51,6 +64,8 @@ function Sidebar() {
                                             </Link>
                                         );
                                     })}
+                                        </div>
+                                    )}
                                 </>
                             )}
                         </div>
