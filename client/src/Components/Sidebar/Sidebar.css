@@ -8,6 +8,7 @@
     border-right: 1px solid #d9dde3;
     color: black;
 }
+
 /* ===========================
    Logo
 =========================== */
@@ -49,8 +50,8 @@
 =========================== */
 
 .sidebar-nav {
-    padding: 0 16px;
-    overflow-y:scroll;
+    padding: 0 16px 20px;
+    overflow-y: auto;
 }
 .sidebar-nav-parent svg{
     margin-right:10px;
