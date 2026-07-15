@@ -34,20 +34,14 @@ function Sidebar() {
                                     <div
                                         className={`sidebar-nav-parent ${isOpen ? "active" : ""}`}
                                         onClick={() => setActiveItem(isOpen ? null : item.title)}
-                                        style={{
-                                            cursor: "pointer",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "8px",
-                                        }}
                                     >
                                         <Icon size={20} strokeWidth={2.2} />
                                         <span>{item.title}</span>
-                                    <div className="sidebar-nav-parent-icon" style={{ marginLeft: "auto" }}>
+                                        <div className="sidebar-nav-parent-icon">
                                         {isOpen ? (
-                                                    <ChevronDown size={16} strokeWidth={2} />
+                                                    <ChevronDown size={21} strokeWidth={2} />
                                                 ) : (
-                                                    <ChevronRight size={16} strokeWidth={2} />
+                                                    <ChevronRight size={21} strokeWidth={2} />
                                                 )}
                                             </div>
                                     </div>
