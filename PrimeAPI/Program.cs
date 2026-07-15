@@ -36,6 +36,26 @@ builder.Services.AddControllers()
         );
     });
 
+// Read allowed origins from configuration. Support both root "AllowedOrigins" and nested "Cors:AllowedOrigins".
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>()
+    ?? builder.Configuration
+        .GetSection("AllowedOrigins")
+        .Get<string[]>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(allowedOrigins ?? System.Array.Empty<string>())
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddScoped<IProductMetadataService,ProductMetadataService>();
 builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository>();
 
@@ -56,7 +76,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
+
+
 app.UseHttpsRedirection();
+
+// Enable CORS for the frontend
+app.UseCors("FrontendPolicy");
 
 app.UseAuthorization();
 
