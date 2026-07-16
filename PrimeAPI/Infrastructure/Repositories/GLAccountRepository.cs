@@ -72,5 +72,10 @@ namespace PrimeAPI.Infrastructure.Repositories
                 .Where(a => a.AccountType == type)
                 .ToListAsync();
         }
+
+        public async Task<int> GetTotalRecordsAsync()
+        {
+            return await _context.GlAccounts.CountAsync();
+        }
     }
 }
