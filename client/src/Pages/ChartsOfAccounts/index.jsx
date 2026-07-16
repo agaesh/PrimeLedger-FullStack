@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import FilterAccounts from './FilterAccounts';
 import AccountsTable from './AccountsTable';
-import { getChartsOfAccounts, deleteChartOfAccount } from "../../api/ChartsOfAccount.js";
+import { getChartsOfAccounts, deleteChartOfAccount } from "../../API/ChartsOfAccount.js";
 
 function ChartsOfAccounts() {
     const [accounts, setAccounts] = useState([]);
