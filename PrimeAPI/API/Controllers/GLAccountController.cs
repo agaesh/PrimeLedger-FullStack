@@ -2,8 +2,7 @@
 using PrimeAPI.Application.Interface;
 using PrimeLedger.Shared.DTO.GLAccounts;
 using PrimeLedger.Shared.Enums;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using PrimeAPI.Application.Helpers;
 
 namespace PrimeAPI.Controllers
 {
@@ -20,10 +19,20 @@ namespace PrimeAPI.Controllers
 
         // ✅ GET: api/gl-accounts?pageNumber=1&pageSize=10
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GlAccountDTO>>> GetAll(int pageNumber = 1, int pageSize = 10)
+        public async Task<ActionResult<PagedResult<GlAccountDTO>>> GetAll(int pageNumber = 1, int pageSize = 10)
         {
             var accounts = await _service.GetAllAsync(pageNumber, pageSize);
-            return Ok(accounts);
+            var totalRecords = await _service.GetTotalRecordsAsync();
+            var pagedResult = new PagedResult<GlAccountDTO>
+            {
+                Items = accounts,
+                TotalRecords = totalRecords,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize)
+            };
+
+            return Ok(pagedResult);
         }
 
         // ✅ GET: api/gl-accounts/5

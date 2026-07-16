@@ -12,5 +12,7 @@ namespace PrimeAPI.Application.Interface
         Task UpdateAsync(GlAccountStatusUpdateDTO dto);
         Task DeleteAsync(int id);
         Task<IEnumerable<GlAccountDTO>> GetByTypeAsync(AccountType type, int pageNumber = 1, int pageSize = 10);
+
+        Task<int> GetTotalRecordsAsync();
     }
 }

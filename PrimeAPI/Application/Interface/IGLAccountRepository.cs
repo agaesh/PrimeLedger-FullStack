@@ -14,5 +14,7 @@ namespace PrimeAPI.Application.Interface
         Task DeleteAsync(int id);
 
         Task<IEnumerable<GlAccount>> GetByTypeAsync(AccountType type);
+
+        Task<int> GetTotalRecordsAsync();
     }
 }
