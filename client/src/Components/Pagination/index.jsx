@@ -1,5 +1,4 @@
 import { Pagination } from "@mui/material";
-import "./Pagination.css";
 
 const PaginationComponent = ({ totalPages, currentPage, onChange }) => {
     return (
