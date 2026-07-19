@@ -10,6 +10,7 @@ import {
 import FilterAccounts from './FilterAccounts';
 import AccountsTable from './AccountsTable';
 import { getChartsOfAccounts, deleteChartOfAccount } from "../../API/ChartsOfAccount.js";
+import Pagination from '../../Components/Pagination/index.jsx'
 
 function ChartsOfAccounts() {
     const [accounts, setAccounts] = useState([]);
@@ -125,7 +126,7 @@ function ChartsOfAccounts() {
             </TableContainer>
 
             <Divider sx={{ my: 3 }} />
-
+            <Pagination totalPages={totalPages} currentPage={currentPage}  onChange ={onchange}/>
             {/* Form section can be added here later */}
         </div>
     );
