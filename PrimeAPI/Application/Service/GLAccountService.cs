@@ -39,7 +39,7 @@ namespace PrimeAPI.Application.Services
         // ✅ Paginated GetAll
         public async Task<IEnumerable<GlAccountDTO>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var accounts = await _repository.GetAllAsync();
+            var accounts = _repository.GetAll();
             return accounts
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)

@@ -17,11 +17,10 @@ namespace PrimeAPI.Infrastructure.Repositories
         }
 
         // ✅ Get all accounts
-        public async Task<IEnumerable<GlAccount>> GetAllAsync()
+        public IQueryable<GlAccount> GetAll()
         {
-            return await _context.GlAccounts
-                .Include(a => a.ChildAccounts)
-                .ToListAsync();
+            return _context.GlAccounts
+                .Include(a => a.ChildAccounts);
         }
 
         // ✅ Get account by Id

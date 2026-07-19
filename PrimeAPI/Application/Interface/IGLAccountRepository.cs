@@ -6,7 +6,8 @@ namespace PrimeAPI.Application.Interface
 {
     public interface IGLAccountRepository
     {
-        Task<IEnumerable<GlAccount>> GetAllAsync();
+
+        IQueryable<GlAccount> GetAll();
         Task<GlAccount?> GetByIdAsync(int id);
         Task<GlAccount?> GetByAccountCodeAsync(string accountCode);
         Task<GlAccount> AddAsync(GlAccount account);
