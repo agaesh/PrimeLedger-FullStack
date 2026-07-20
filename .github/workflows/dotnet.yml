@@ -24,13 +24,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      working-directory: PrimeApi
+      working-directory: PrimeAPI
       run: dotnet restore
 
     - name: Build
-      working-directory: PrimeApi
+      working-directory: PrimeAPI
       run: dotnet build --no-restore
 
     - name: Test
-      working-directory: PrimeApi
+      working-directory: PrimeAPI
       run: dotnet test --no-build --verbosity normal
