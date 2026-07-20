@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
@@ -15,14 +15,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: '8.0.x'
+
     - name: Restore dependencies
+      working-directory: PrimeApi
       run: dotnet restore
+
     - name: Build
+      working-directory: PrimeApi
       run: dotnet build --no-restore
+
     - name: Test
+      working-directory: PrimeApi
       run: dotnet test --no-build --verbosity normal
