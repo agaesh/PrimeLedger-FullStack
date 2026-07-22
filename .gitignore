@@ -362,3 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /.vercel
+/PrimeAPI/.env.development
+/PrimeAPI/.env.production
+/PrimeAPI/appsettings.production.json
+/PrimeAPI/appsettings.Development.json
+/PrimeAPI/PrimeAPI.csproj
+/PrimeAPI/.env.example

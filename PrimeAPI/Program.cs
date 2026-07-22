@@ -6,10 +6,12 @@ using PrimeAPI.Infrasfructure;
 using PrimeAPI.Infrastructure.Repositories;
 using PrimeAPI.Infrastructure.Services;
 using PrimeAPI.Repositories;
+using DotNetEnv;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+// Load environment variables from .env file
+Env.Load();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
