@@ -38,6 +38,22 @@ builder.Services.AddControllers()
         );
     });
 
+var allowedOrigin = Environment.GetEnvironmentVariable("CORS_ALLOWED_ORIGINS");
+
+    // Add CORS policy
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy", policy =>
+        {
+            if (!string.IsNullOrEmpty(allowedOrigin))
+            {
+                policy.WithOrigins(allowedOrigin)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+            }
+        });
+    });
+
 builder.Services.AddScoped<IProductMetadataService,ProductMetadataService>();
 builder.Services.AddScoped<IProductMetadataRepository, ProductMetadataRepository>();
 
@@ -59,7 +75,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
