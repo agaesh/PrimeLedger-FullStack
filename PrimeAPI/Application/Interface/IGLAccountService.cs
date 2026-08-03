@@ -5,7 +5,7 @@ namespace PrimeAPI.Application.Interface
 {
     public interface IGLAccountService
     {
-        Task<IEnumerable<GlAccountDTO>> GetAllAsync(int pageNumber = 1, int pageSize = 10);
+        Task<IEnumerable<GlAccountDTO>> GetAllAsync(int pageNumber = 1, int pageSize = 10, GLAccountFilterDTO? filters = null);
         Task<GlAccountDTO> GetByIdAsync(int id);
         Task<GlAccountDTO> GetByAccountCodeAsync(string accountCode);
         Task<int> AddAsync(GlAccountCreateDTO dto);
