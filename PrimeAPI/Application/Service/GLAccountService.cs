@@ -1,7 +1,8 @@
-﻿    using global::PrimeAPI.Application.Interface;
-    using global::PrimeAPI.Domain;
-    using PrimeLedger.Shared.DTO.GLAccounts;
-    using PrimeLedger.Shared.Enums;
+﻿using global::PrimeAPI.Application.Interface;
+using global::PrimeAPI.Domain;
+using Microsoft.EntityFrameworkCore;
+using PrimeLedger.Shared.DTO.GLAccounts;
+using PrimeLedger.Shared.Enums;
 
 namespace PrimeAPI.Application.Services
 {
@@ -46,27 +47,24 @@ namespace PrimeAPI.Application.Services
 
             var filteredAccounts = accounts;
 
-            // Filter by Account Type
-            if (filters != null && filters.type.HasValue)
-            {
-                filteredAccounts = filteredAccounts
-                    .Where(e => e.AccountType == filters.type.Value);
-            }
-
-            // Search filter
-            if (filters != null && !string.IsNullOrWhiteSpace(filters.search))
-            {
-                filteredAccounts = filteredAccounts.Where(e =>
-                    e.AccountCode.Contains(filters.search) ||
-                    e.AccountName.Contains(filters.search)
-                );
-            }
-
-            // Active status filter
             if (filters != null)
             {
+                if (filters.type.HasValue)
+                {
+                    filteredAccounts = filteredAccounts
+                        .Where(e => e.AccountType == filters.type.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(filters.search))
+                {
+                    filteredAccounts = filteredAccounts.Where(e =>
+                        e.AccountCode.Contains(filters.search) ||
+                        e.AccountName.Contains(filters.search));
+                }
+
+               
                 filteredAccounts = filteredAccounts
-                    .Where(e => e.IsActive == filters.isActive);
+                    .Where(e => e.IsActive == filters.isActive);         
             }
 
             // Pagination AFTER filtering
