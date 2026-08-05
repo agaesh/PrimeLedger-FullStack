@@ -19,9 +19,10 @@ namespace PrimeAPI.Controllers
 
         // ✅ GET: api/gl-accounts?pageNumber=1&pageSize=10
         [HttpGet]
-        public async Task<ActionResult<PagedResult<GlAccountDTO>>> GetAll(int pageNumber = 1, int pageSize = 10, Array Filters = null)
+        public async Task<ActionResult<PagedResult<GlAccountDTO>>> GetAll([FromQuery] GLAccountFilterDTO filters,int pageNumber = 1, int pageSize = 10
+            )
         {
-            var accounts = await _service.GetAllAsync(pageNumber, pageSize);
+            var accounts = await _service.GetAllAsync(pageNumber, pageSize, filters);
             var totalRecords = await _service.GetTotalRecordsAsync();
             var pagedResult = new PagedResult<GlAccountDTO>
             {

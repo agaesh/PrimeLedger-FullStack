@@ -1,7 +1,8 @@
-﻿    using global::PrimeAPI.Application.Interface;
-    using global::PrimeAPI.Domain;
-    using PrimeLedger.Shared.DTO.GLAccounts;
-    using PrimeLedger.Shared.Enums;
+﻿using global::PrimeAPI.Application.Interface;
+using global::PrimeAPI.Domain;
+using Microsoft.EntityFrameworkCore;
+using PrimeLedger.Shared.DTO.GLAccounts;
+using PrimeLedger.Shared.Enums;
 
 namespace PrimeAPI.Application.Services
 {
@@ -37,12 +38,42 @@ namespace PrimeAPI.Application.Services
         }
 
         // ✅ Paginated GetAll
-        public async Task<IEnumerable<GlAccountDTO>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<IEnumerable<GlAccountDTO>> GetAllAsync(
+            int pageNumber = 1,
+            int pageSize = 10,
+            GLAccountFilterDTO? filters = null)
         {
             var accounts = _repository.GetAll();
-            return accounts
+
+            var filteredAccounts = accounts;
+
+            if (filters != null)
+            {
+                if (filters.type.HasValue)
+                {
+                    filteredAccounts = filteredAccounts
+                        .Where(e => e.AccountType == filters.type.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(filters.search))
+                {
+                    filteredAccounts = filteredAccounts.Where(e =>
+                        e.AccountCode.Contains(filters.search) ||
+                        e.AccountName.Contains(filters.search));
+                }
+
+               
+                filteredAccounts = filteredAccounts
+                    .Where(e => e.IsActive == filters.isActive);         
+            }
+
+            // Pagination AFTER filtering
+            filteredAccounts = filteredAccounts
                 .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
+                .Take(pageSize);
+
+            // Projection
+            var result = await filteredAccounts
                 .Select(a => new GlAccountDTO
                 {
                     Id = a.Id,
@@ -55,7 +86,10 @@ namespace PrimeAPI.Application.Services
                     IsActive = a.IsActive,
                     CreatedDate = a.CreatedDate,
                     UpdatedDate = a.UpdatedDate
-                });
+                })
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<GlAccountDTO> GetByIdAsync(int id)
