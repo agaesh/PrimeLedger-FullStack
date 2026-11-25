@@ -48,6 +48,9 @@ builder.Services.AddScoped<IGLAccountRepository, GLAccountRepository>();
 builder.Services.AddScoped<ITaxRegimeRepository, TaxRegimeRepository>();
 builder.Services.AddScoped<ITaxRegimeService, TaxRegimeService>();
 
+builder.Services.AddScoped<IJournalEntryRepository, JournalEntryRepository>();
+builder.Services.AddScoped<IJournalEntryService, JournalEntryService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
