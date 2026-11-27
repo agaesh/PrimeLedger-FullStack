@@ -222,7 +222,9 @@ namespace PrimeAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("UQ_TaxRegime_Active")
+                        .HasFilter("[is_active] = 1");
 
                     b.HasIndex("PurchaseGLId");
 
