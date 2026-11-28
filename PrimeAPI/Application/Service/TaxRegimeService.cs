@@ -55,16 +55,11 @@ namespace PrimeAPI.Application.Services
 
             if (history.IsActive)
             {
-                var activeRegime = await _repository.GetActiveRegime();
-                if (activeRegime is not null)
+                if (await _repository.ExistActiveHistoryByTaxType(history.CodeType))
                 {
-                    // Prevent inserting while another regime is active or open-ended
-                    if (activeRegime.IsActive || activeRegime.EffectiveTo is null)
-                    {
-                        throw new InvalidOperationException(
-                            "Cannot insert new regime while current regime is active or has no end date."
-                        );
-                    }
+                    throw new InvalidOperationException(
+                        $"An active, non-deleted regime already exists for code type {history.CodeType}."
+                    );
                 }
             }
 

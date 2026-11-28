@@ -172,6 +172,11 @@ namespace PrimeAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CodeType")
+                        .IsUnique()
+                        .HasDatabaseName("UX_TaxRegime_Active_CodeType")
+                        .HasFilter("[is_active] = 1");
+
                     b.ToTable("TaxRegime");
                 });
 
