@@ -22,6 +22,68 @@ namespace PrimeAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("JournalEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntryNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("entry_number");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JournalEntries");
+                });
+
+            modelBuilder.Entity("JournalEntryLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int")
+                        .HasColumnName("account_id");
+
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("credit");
+
+                    b.Property<decimal>("Debit")
+                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnName("debit");
+
+                    b.Property<int>("JournalEntryId")
+                        .HasColumnType("int")
+                        .HasColumnName("journal_entry_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("JournalEntryId");
+
+                    b.ToTable("JournalEntryLine", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_JournalEntryLine_OneSidedAmount", "([debit] >= 0 AND [credit] >= 0) AND (([debit] > 0 AND [credit] = 0) OR ([credit] > 0 AND [debit] = 0))");
+                        });
+                });
+
             modelBuilder.Entity("PrimeAPI.Domain.GlAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -227,7 +289,9 @@ namespace PrimeAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("UQ_TaxRegime_Active")
+                        .HasFilter("[is_active] = 1");
 
                     b.HasIndex("PurchaseGLId");
 
@@ -237,6 +301,25 @@ namespace PrimeAPI.Migrations
                         {
                             t.HasCheckConstraint("CK_TaxTreatment_DifferentAccounts", "[purchase_gl_id] <> [sales_gl_id]");
                         });
+                });
+
+            modelBuilder.Entity("JournalEntryLine", b =>
+                {
+                    b.HasOne("PrimeAPI.Domain.GlAccount", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("JournalEntry", "JournalEntry")
+                        .WithMany("Lines")
+                        .HasForeignKey("JournalEntryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("JournalEntry");
                 });
 
             modelBuilder.Entity("PrimeAPI.Domain.GlAccount", b =>
@@ -276,6 +359,11 @@ namespace PrimeAPI.Migrations
                     b.Navigation("PurchaseGL");
 
                     b.Navigation("SalesGL");
+                });
+
+            modelBuilder.Entity("JournalEntry", b =>
+                {
+                    b.Navigation("Lines");
                 });
 
             modelBuilder.Entity("PrimeAPI.Domain.GlAccount", b =>

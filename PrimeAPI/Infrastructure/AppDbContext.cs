@@ -13,6 +13,8 @@
         public DbSet<TaxTreatment> TaxTreatments { get; set; }
         public DbSet<TaxRegime> TaxRegime { get; set; }
         public DbSet<GlAccount> GlAccounts { get; set; }
+        public DbSet<JournalEntry> JournalEntries { get; set; }
+        public DbSet<JournalEntryLine> JournalEntryLines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -99,6 +101,35 @@
                       .WithMany(e => e.ChildAccounts)
                       .HasForeignKey(e => e.ParentAccountId)
                       .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete
+            });
+
+            modelBuilder.Entity<JournalEntryLine>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("JournalEntryLine", table =>
+                {
+                    table.HasCheckConstraint(
+                        "CK_JournalEntryLine_OneSidedAmount",
+                        "([debit] >= 0 AND [credit] >= 0) AND " +
+                        "(([debit] > 0 AND [credit] = 0) OR ([credit] > 0 AND [debit] = 0))");
+                });
+
+                entity.Property(e => e.Debit)
+                      .HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Credit)
+                      .HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(e => e.JournalEntry)
+                      .WithMany(e => e.Lines)
+                      .HasForeignKey(e => e.JournalEntryId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Account)
+                      .WithMany()
+                      .HasForeignKey(e => e.AccountId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
