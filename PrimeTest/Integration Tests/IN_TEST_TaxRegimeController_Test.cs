@@ -126,12 +126,11 @@ namespace PrimeAPI.Tests.Integration
 
                 Console.WriteLine("[SETUP] Initializing mock repository");
 
-                // Setup GetActiveRegime to return the currently active regime
-                mockRepo.Setup(r => r.GetActiveRegime()).ReturnsAsync(() =>
-                {
-                    Console.WriteLine($"[MOCK] GetActiveRegime called - Current active regime: {(activeRegime == null ? "NULL" : $"Id={activeRegime.Id}, IsActive={activeRegime.IsActive}, EffectiveFrom={activeRegime.EffectiveFrom}, EffectiveTo={activeRegime.EffectiveTo}")}");
-                    return activeRegime;
-                });
+                mockRepo.Setup(r => r.ExistActiveHistoryByTaxType(It.IsAny<TaxCodeType>()))
+                    .Returns<TaxCodeType>(type => Task.FromResult(
+                        activeRegime != null &&
+                        activeRegime.CodeType == type &&
+                        activeRegime.IsActive));
 
                 // Setup AddAsync to capture the added regime as active if IsActive is true
                 mockRepo.Setup(r => r.AddAsync(It.IsAny<TaxRegime>()))
@@ -318,7 +317,7 @@ namespace PrimeAPI.Tests.Integration
                     CodeType = TaxCodeType.GST,
                     EffectiveFrom = DateTime.UtcNow,
                     EffectiveTo = DateTime.UtcNow.AddMonths(1),
-                    IsActive = true,
+                    IsActive = false,
                 };
 
                 Console.WriteLine("[ACTION] Creating tax regime");

@@ -33,7 +33,7 @@ namespace PrimeAPI.Infrastructure.Repositories
 
         public async Task<TaxRegime?> GetByIdAsync(int id)
         {
-            return  await _context.TaxRegime.FirstOrDefaultAsync(h => h.Id == id);
+            return await _context.TaxRegime.FirstOrDefaultAsync(h => h.Id == id);
         }
         public async Task<IEnumerable<TaxRegime?>> GetByTaxCodeType(TaxCodeType type)
         {
@@ -72,15 +72,6 @@ namespace PrimeAPI.Infrastructure.Repositories
         {
             return await _context.TaxRegime
                 .AnyAsync(e => e.CodeType == type && e.IsActive);
-        }
-
-        public async Task<TaxRegime?> GetActiveRegime()
-        {
-            // Use FirstOrDefaultAsync to avoid throwing when multiple active regimes exist in the
-            // in-memory/test database. The service will still validate presence of an active
-            // regime and prevent invalid inserts. In production the data model should enforce
-            // uniqueness of active regimes per tax code if required.
-            return await _context.TaxRegime.FirstOrDefaultAsync(r => r.IsActive);
         }
     }
 }

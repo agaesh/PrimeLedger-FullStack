@@ -17,7 +17,5 @@ namespace PrimeAPI.Application.Interface
         Task DeleteAsync(int id);
 
         Task<bool> ExistActiveHistoryByTaxType(TaxCodeType type);
-
-        Task<TaxRegime?> GetActiveRegime();
     }
 }

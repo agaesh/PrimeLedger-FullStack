@@ -120,7 +120,8 @@ namespace PrimeTest.Unit_Tests
                     IsActive = true
                 };
                 Console.WriteLine("[ACTION] Mock repository to return existing active regime.");
-                _mockRepo.Setup(x => x.GetActiveRegime()).ReturnsAsync(existing);
+                _mockRepo.Setup(x => x.ExistActiveHistoryByTaxType(existing.CodeType))
+                    .ReturnsAsync(true);
 
                 Console.WriteLine("[ACTION] Act: Call AddAsync with the DTO and expect InvalidOperationException.");
                 await Assert.ThrowsAsync<InvalidOperationException>(
@@ -146,8 +147,8 @@ namespace PrimeTest.Unit_Tests
             try
             {
                 // Arrange: no active regime in the repository
-                _mockRepo.Setup(x => x.GetActiveRegime())
-                         .ReturnsAsync((TaxRegime)null);
+                _mockRepo.Setup(x => x.ExistActiveHistoryByTaxType(TaxCodeType.GST))
+                         .ReturnsAsync(false);
 
                 var history = new TaxRegimeCreateDTO
                 {
@@ -173,12 +174,32 @@ namespace PrimeTest.Unit_Tests
             }
             catch (Exception ex)
             {
-                
                 TestLogger.Log(nameof(AddAsync_ShouldSucceed_WhenNoActiveRecordExists),
                     "Unit", false, ex.Message, sw.ElapsedMilliseconds);
                 throw;
             }
-         
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldAllowActiveRegimeForDifferentCodeType()
+        {
+            var existingActiveCodeType = TaxCodeType.SST;
+            _mockRepo.Setup(x => x.ExistActiveHistoryByTaxType(It.IsAny<TaxCodeType>()))
+                     .Returns<TaxCodeType>(type =>
+                         Task.FromResult(type == existingActiveCodeType));
+            _mockRepo.Setup(x => x.AddAsync(It.IsAny<TaxRegime>()))
+                     .ReturnsAsync((TaxRegime regime) => regime);
+
+            var result = await _service.AddAsync(new TaxRegimeCreateDTO
+            {
+                CodeType = TaxCodeType.GST,
+                EffectiveFrom = DateTime.UtcNow,
+                IsActive = true
+            });
+
+            Assert.Equal(TaxCodeType.GST, result.CodeType);
+            _mockRepo.Verify(x => x.ExistActiveHistoryByTaxType(TaxCodeType.GST), Times.Once);
+            _mockRepo.Verify(x => x.AddAsync(It.IsAny<TaxRegime>()), Times.Once);
         }
 
     }

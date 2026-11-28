@@ -62,12 +62,6 @@
                       .HasForeignKey(e => e.SalesGLId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                // Only one active regime per CodeType
-                entity.HasIndex(e => e.Code)
-                      .HasFilter("[is_active] = 1")
-                      .IsUnique()
-                      .HasDatabaseName("UQ_TaxRegime_Active");
-
                 // Add check constraint via ToTable
                 entity.ToTable("TaxTreatment", tb =>
                 {
@@ -83,6 +77,11 @@
                 entity.Property(e => e.CodeType)
                       .HasConversion<string>()
                       .HasMaxLength(10);
+
+                entity.HasIndex(e => e.CodeType)
+                      .HasFilter("[is_active] = 1")
+                      .IsUnique()
+                      .HasDatabaseName("UX_TaxRegime_Active_CodeType");
             });
 
             modelBuilder.Entity<GlAccount>(entity =>
